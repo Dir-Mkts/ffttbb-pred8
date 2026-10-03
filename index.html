@@ -376,8 +376,9 @@ function jsonpFetch(url) {
   });
 }
 
-// Proxy cascade — different URL formats to maximise success with null origin
+// Proxy cascade — Klement Worker first, then fallbacks
 const PROXIES = [
+  [u => `https://klement-proxy.aa-events23.workers.dev/?url=${encodeURIComponent(u)}`, null],
   [u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`, null],
   [u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`, null],
   [u => `https://corsproxy.io/?${encodeURIComponent(u)}`, null],
