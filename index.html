@@ -901,7 +901,6 @@ function checkAccess(){
     </div>
 
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <button class="save-pick-btn" id="savePickBtn" onclick="savePick()">💾 Guardar Pick</button>
       <button class="save-pick-btn" id="sharePickBtn" onclick="sharePick()" style="background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.3);color:var(--blue);display:none">📤 Compartir</button>
     </div>
   </div>
@@ -918,6 +917,12 @@ function checkAccess(){
     </div>
   </div>
   <div class="trk-stats" id="trkStats"></div>
+  <div style="padding:0 14px 10px;display:flex;align-items:center;gap:8px">
+    <span style="font-size:10px;color:var(--fg3);font-weight:600;letter-spacing:.5px">LIGA</span>
+    <select id="trkLigaFilter" onchange="renderTracker()" style="background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--fg);font-size:11px;padding:4px 8px;cursor:pointer;font-family:var(--sans)">
+      <option value="">Todas</option>
+    </select>
+  </div>
   <div class="pk-list" id="pkList"></div>
 </div>
 
@@ -1506,8 +1511,7 @@ async function calcular() {
   if(isOU && r.ick < 7.0){
     al.innerHTML+=`<div class="al warn"><span class="al-i">🔶</span><span class="al-t"><strong>O/U con ICK bajo (${r.ick.toFixed(1)}):</strong> El modelo recomienda ICK ≥ 7.0 para Over/Under. Pick de baja confianza.</span></div>`;
   }
-  // Mostrar botón guardar pick
-  document.getElementById('savePickBtn').style.display='block';
+  // Mostrar botón compartir
   document.getElementById('sharePickBtn').style.display='block';
 }
 
@@ -1675,13 +1679,30 @@ function renderTracker(){
     <div class="ts"><div class="ts-v" style="color:${rateColor}">${decided.length ? rate+'%' : '—'}</div><div class="ts-l">% Acierto</div></div>
   ` + ickHtml + mktHtml + ligaHtml;
 
+  // Populate liga filter dropdown
+  const normLigaFilter = s => (s||'').replace(/\s*\d{4}-\d{2,4}$/,'').trim();
+  const allLigas = [...new Set(picks.map(p=>normLigaFilter(p.league)).filter(Boolean))].sort();
+  const filterSel = document.getElementById('trkLigaFilter');
+  if (filterSel) {
+    const curVal = filterSel.value;
+    filterSel.innerHTML = '<option value="">Todas</option>' + allLigas.map(l=>`<option value="${l}"${l===curVal?' selected':''}>${l}</option>`).join('');
+  }
+  const filterVal = filterSel ? filterSel.value : '';
+  // Sort picks by ds descending (most recent first), then filter by league
+  const sortedPicks = [...picks].sort((a,b) => {
+    const da = a.ds || a.date || '';
+    const db = b.ds || b.date || '';
+    return da.localeCompare(db);
+  });
+  const visiblePicks = filterVal ? sortedPicks.filter(p => normLigaFilter(p.league) === filterVal) : sortedPicks;
+
   // Lista de picks
   const list=document.getElementById('pkList');
   if(!picks.length){
-    list.innerHTML='<div class="trk-empty">Aún no hay picks guardados.<br>Analiza un partido y presiona <strong>Guardar Pick</strong>.</div>';
+    list.innerHTML='<div class="trk-empty">Aún no hay picks guardados.<br>Analiza un partido para que se guarden automáticamente.</div>';
     return;
   }
-  list.innerHTML=picks.map(p=>{
+  list.innerHTML=visiblePicks.map(p=>{
     const rW=p.result==='win'?'active':'', rL=p.result==='loss'?'active':'', rP=p.result==='pending'?'active':'';
     const mktLabel = p.market ? `<span style="font-size:9px;color:var(--fg3);background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-family:var(--mono)">${p.market}</span>` : '';
     const ickVal = parseFloat(p.ick);
@@ -1950,7 +1971,7 @@ async function loadJornada() {
   allChip.addEventListener('click', () => {
     document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
     allChip.classList.add('active');
-    filterDaySections(null);
+    filterDaySectionsByDs(null);
   });
   _dateNav.appendChild(allChip);
 
@@ -1966,7 +1987,7 @@ async function loadJornada() {
     chip.addEventListener('click', () => {
       document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
-      filterDaySections(ds);
+      loadDateOnDemand(ds);
     });
     _dateNav.appendChild(chip);
   });
@@ -1976,16 +1997,12 @@ async function loadJornada() {
   const content = document.getElementById('jornadaContent');
   content.innerHTML = `<div class="jornada-empty"><span class="spin">⟳</span> Cargando proyección 7 días…</div>`;
 
-  // Fetch 7 days in parallel (today + 6)
+  // Fetch ONLY today on initial load; other dates loaded on demand
   const days = Array.from({length:7}, (_,i) => getDateStr(i));
   let dayResults;
   try {
-    dayResults = await Promise.all(days.map(async ds => {
-      try {
-        const sb = await espnFetch(`${ESPN}/${code}/scoreboard?dates=${ds}&limit=50`);
-        return { ds, events: sb.events || [] };
-      } catch { return { ds, events: [] }; }
-    }));
+    const todaySb = await espnFetch(`${ESPN}/${code}/scoreboard?dates=${_todayDS}&limit=50`);
+    dayResults = [{ ds: _todayDS, events: todaySb.events || [] }];
   } catch(e) {
     content.innerHTML = `<div class="jornada-empty">⚠️ No se pudo cargar la proyección: ${e.message}</div>`;
     return;
@@ -2151,13 +2168,99 @@ async function loadJornada() {
     globalIdx += matchList.length;
   }
 
-  // Aplicar filtro Hoy por defecto ahora que las secciones existen
+  // Hoy ya está cargado — solo asegurarse de que el chip esté activo
   const todayChipEl = _dateNav.querySelector(`[data-ds="${_todayDS}"]`);
   if (todayChipEl) {
     document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
     todayChipEl.classList.add('active');
-    filterDaySections(_todayDS);
   }
+  filterDaySectionsByDs(_todayDS);
+}
+
+// Lazy-load a date that hasn't been fetched yet
+async function loadDateOnDemand(ds) {
+  const code = document.getElementById('ligaJornada').value;
+  if (!code) return;
+  const content = document.getElementById('jornadaContent');
+  // Check if section already exists
+  if (document.getElementById('daySection_'+ds)) {
+    filterDaySectionsByDs(ds);
+    return;
+  }
+  // Show loading placeholder for this date
+  let placeholder = document.getElementById('dayPlaceholder_'+ds);
+  if (!placeholder) {
+    placeholder = document.createElement('div');
+    placeholder.id = 'dayPlaceholder_'+ds;
+    placeholder.style.cssText = 'text-align:center;padding:20px;color:var(--fg3);font-size:12px';
+    placeholder.innerHTML = `<span class="spin">⟳</span> Cargando ${fmtDateLabel(ds, true)}…`;
+    content.appendChild(placeholder);
+  }
+  filterDaySectionsByDs(ds);
+  try {
+    const sb = await espnFetch(`${ESPN}/${code}/scoreboard?dates=${ds}&limit=50`);
+    const events = sb.events || [];
+    if (placeholder) placeholder.remove();
+    if (!events.length) {
+      const empty = document.createElement('div');
+      empty.id = 'daySection_'+ds;
+      empty.className = 'day-section';
+      empty.innerHTML = `<div class="day-hdr"><span class="day-hdr-lbl">${fmtDateLabel(ds,true)}</span></div><div style="text-align:center;padding:20px;color:var(--fg3);font-size:12px">Sin partidos programados.</div>`;
+      content.appendChild(empty);
+      filterDaySectionsByDs(ds);
+      return;
+    }
+    // Build match cards for this date
+    const matchList = events.map(ev => {
+      const comp = ev.competitions?.[0];
+      const competitors = comp?.competitors || [];
+      const home = competitors.find(c=>c.homeAway==='home') || competitors[0];
+      const away = competitors.find(c=>c.homeAway==='away') || competitors[1];
+      if (!home||!away) return null;
+      const status = comp?.status;
+      const isCompleted = status?.type?.completed || false;
+      const time = ev.date ? new Date(ev.date).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}) : '';
+      const score = isCompleted ? `${comp?.competitors?.find(c=>c.homeAway==='home')?.score||0}–${comp?.competitors?.find(c=>c.homeAway==='away')?.score||0}` : time;
+      const odds = comp?.odds?.[0] || {};
+      const ouLine = odds?.overUnder ?? null;
+      const ouOver = odds?.overOdds ?? null;
+      return { id:ev.id, homeId:home.team.id, homeName:home.team.displayName, awayId:away.team.id, awayName:away.team.displayName, statusLbl:score, isCompleted, espnOdds:{ouLine,ouOver} };
+    }).filter(Boolean);
+    _picksByDate[ds] = _picksByDate[ds] || [];
+    _pickTargetByDate[ds] = matchList.length;
+    _pickDoneByDate[ds] = 0;
+    const daySection = document.createElement('div');
+    daySection.className = 'day-section';
+    daySection.id = 'daySection_'+ds;
+    daySection.innerHTML = `<div class="day-hdr"><span class="day-hdr-lbl">${fmtDateLabel(ds,true)}</span><span class="day-hdr-count">${matchList.length} partidos</span></div><div class="match-cards" id="dayCards_${ds}"></div>`;
+    content.appendChild(daySection);
+    const cardsEl = document.getElementById('dayCards_'+ds);
+    const startIdx = Object.values(_pickTargetByDate).reduce((s,v)=>s+v,0) - matchList.length;
+    cardsEl.innerHTML = matchList.map((m,i)=>`<div class="match-card loading" id="mcard_${startIdx+i}"><div class="mc-header"><span class="mc-time">${m.statusLbl}</span><span class="mc-ick-badge" style="color:var(--fg3);border-color:rgba(100,120,160,.2)">ICK —</span></div><div class="mc-body"><div class="mc-teams"><div class="mc-team">${m.homeName}</div><div class="mc-vs">vs</div><div class="mc-team away">${m.awayName}</div></div><div class="mc-loading"><span class="spin">⟳</span> Calculando…</div></div></div>`).join('');
+    filterDaySectionsByDs(ds);
+    for (let i=0;i<matchList.length;i++) {
+      enrichMatchCard(startIdx+i, matchList[i], code, ds, matchList[i].espnOdds);
+      if (i%4===3) await new Promise(r=>setTimeout(r,300));
+    }
+  } catch(e) {
+    if (placeholder) placeholder.remove();
+    const errEl = document.createElement('div');
+    errEl.id = 'daySection_'+ds;
+    errEl.className = 'day-section';
+    errEl.innerHTML = `<div style="text-align:center;padding:20px;color:var(--red);font-size:12px">⚠️ Error cargando ${fmtDateLabel(ds,true)}: ${e.message}</div>`;
+    content.appendChild(errEl);
+  }
+}
+
+// Helper: show only the section for ds (or all if ds is empty)
+function filterDaySectionsByDs(ds) {
+  document.querySelectorAll('.day-section').forEach(sec => {
+    if (!ds) { sec.style.display = ''; return; }
+    const secDs = sec.id.replace('daySection_', '');
+    sec.style.display = (secDs === ds) ? '' : 'none';
+  });
+  _activeRankingDS = ds || '';
+  renderRankingSection();
 }
 
 function setJornadaDate(ds) { loadJornada(); }
