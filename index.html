@@ -1971,9 +1971,7 @@ async function loadJornada() {
     _dateNav.appendChild(chip);
   });
 
-  // Activar Hoy por defecto al cargar
-  const todayChipEl = _dateNav.querySelector(`[data-ds="${_todayDS}"]`);
-  if (todayChipEl) filterDaySections(_todayDS);
+  // El filtro de Hoy se aplica DESPUÉS de que se creen las secciones (ver fin de loadJornada)
 
   const content = document.getElementById('jornadaContent');
   content.innerHTML = `<div class="jornada-empty"><span class="spin">⟳</span> Cargando proyección 7 días…</div>`;
@@ -2151,6 +2149,14 @@ async function loadJornada() {
       if (i % 4 === 3) await new Promise(r => setTimeout(r, 300));
     }
     globalIdx += matchList.length;
+  }
+
+  // Aplicar filtro Hoy por defecto ahora que las secciones existen
+  const todayChipEl = _dateNav.querySelector(`[data-ds="${_todayDS}"]`);
+  if (todayChipEl) {
+    document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
+    todayChipEl.classList.add('active');
+    filterDaySections(_todayDS);
   }
 }
 
