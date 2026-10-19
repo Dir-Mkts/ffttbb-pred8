@@ -1609,10 +1609,11 @@ function renderTracker(){
       </div>
     </div>` : '';
 
-  // Breakdown por liga
-  const ligasAll = [...new Set(picks.map(p=>p.league).filter(Boolean))];
+  // Breakdown por liga — normalizar nombres (quitar año para unificar duplicados)
+  const normLiga = s => (s||'').replace(/\s*\d{4}-\d{2,4}$/,'').trim();
+  const ligasAll = [...new Set(picks.map(p=>normLiga(p.league)).filter(Boolean))];
   const ligaStats = ligasAll.map(lg => {
-    const lp = picks.filter(p=>p.league===lg);
+    const lp = picks.filter(p=>normLiga(p.league)===lg);
     const ld = lp.filter(p=>p.result!=='pending');
     const lw = lp.filter(p=>p.result==='win').length;
     return {lg, total:lp.length, wins:lw, rate: ld.length ? Math.round(lw/ld.length*100) : null};
@@ -1942,7 +1943,7 @@ async function loadJornada() {
 
   // "Todos" chip
   const allChip = document.createElement('button');
-  allChip.className = 'date-chip active';
+  allChip.className = 'date-chip';
   allChip.textContent = 'Todos';
   allChip.style.cssText = 'padding:7px 14px;font-size:10px';
   allChip.dataset.ds = '';
@@ -1955,7 +1956,8 @@ async function loadJornada() {
 
   _days7.forEach((ds, i) => {
     const chip = document.createElement('button');
-    chip.className = 'date-chip';
+    // Hoy activo por defecto
+    chip.className = ds === _todayDS ? 'date-chip active' : 'date-chip';
     chip.dataset.ds = ds;
     const short = fmtDateLabel(ds, false);
     const dayNum = ds.slice(6,8);
@@ -1968,6 +1970,10 @@ async function loadJornada() {
     });
     _dateNav.appendChild(chip);
   });
+
+  // Activar Hoy por defecto al cargar
+  const todayChipEl = _dateNav.querySelector(`[data-ds="${_todayDS}"]`);
+  if (todayChipEl) filterDaySections(_todayDS);
 
   const content = document.getElementById('jornadaContent');
   content.innerHTML = `<div class="jornada-empty"><span class="spin">⟳</span> Cargando proyección 7 días…</div>`;
