@@ -5,69 +5,75 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ÍNDIGO · Predicción de Fútbol</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 /* ── Dashboard Analytics · ÍNDIGO v2.5 ── */
 :root {
   --bg:#03080f;--bg2:#06101e;--bg3:#091628;--bg4:#0e1e36;
   --fg:#e6edf8;--fg2:#7b90b8;--fg3:#3d5278;
-  --accent:#f97316;--blue:#3b82f6;--green:#34d399;--red:#f87171;--yellow:#fbbf24;--indigo:#818cf8;
-  --border:rgba(59,130,246,.12);--border2:rgba(59,130,246,.18);--card:rgba(6,14,28,.75);
-  --shadow:0 8px 40px rgba(0,0,0,.85);--shadow2:0 2px 12px rgba(0,0,0,.5);
-  --glow-o:0 0 24px rgba(249,115,22,.2);--glow-b:0 0 24px rgba(59,130,246,.15);
-  --mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;
+  --accent:#818cf8;--orange:#f97316;--blue:#3b82f6;--green:#34d399;--red:#f87171;--yellow:#fbbf24;--indigo:#818cf8;
+  --accent-rgb:129,140,248;
+  --border:rgba(129,140,248,.14);--border2:rgba(129,140,248,.22);--card:rgba(5,8,20,.78);
+  --shadow:0 8px 40px rgba(0,0,0,.88);--shadow2:0 2px 12px rgba(0,0,0,.5);
+  --glow-a:0 0 28px rgba(129,140,248,.22);--glow-b:0 0 24px rgba(99,102,241,.18);
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;--cond:'Barlow Condensed',sans-serif;
   /* League theme tokens — overridden by setLeagueTheme() */
-  --la:249,115,22;--la2:234,88,12;--lag:rgba(249,115,22,.2);
+  --la:129,140,248;--la2:99,102,241;--lag:rgba(129,140,248,.22);
   color-scheme:dark;
 }
 /* ── Light theme (Versión Blanca) ── */
 [data-theme="light"]{
   --bg:#f2f5f9;--bg2:#e8eef6;--bg3:#dde5f0;--bg4:#cfd9eb;
   --fg:#0b1929;--fg2:#2a4060;--fg3:#5a7090;
-  --accent:#d4500a;--blue:#1d4ed8;--green:#15803d;--red:#b91c1c;--yellow:#b45309;--indigo:#4338ca;
-  --border:rgba(20,60,120,.18);--border2:rgba(20,60,120,.28);--card:#ffffff;
+  --accent:#4338ca;--orange:#d4500a;--blue:#1d4ed8;--green:#15803d;--red:#b91c1c;--yellow:#b45309;--indigo:#4338ca;
+  --accent-rgb:67,56,202;
+  --border:rgba(67,56,202,.2);--border2:rgba(67,56,202,.3);--card:#ffffff;
   --shadow:0 4px 24px rgba(0,0,0,.1);--shadow2:0 2px 8px rgba(0,0,0,.07);
-  --glow-o:0 0 12px rgba(212,80,10,.12);--glow-b:0 0 12px rgba(29,78,216,.1);
-  --la:212,80,10;--la2:180,60,8;--lag:rgba(212,80,10,.12);
+  --glow-a:0 0 14px rgba(67,56,202,.14);--glow-b:0 0 12px rgba(29,78,216,.1);
+  --la:67,56,202;--la2:49,46,129;--lag:rgba(67,56,202,.14);
   color-scheme:light;
 }
-[data-theme="light"] body{background:#edf1f7;background-image:radial-gradient(ellipse at 15% 10%,rgba(29,78,216,.05) 0%,transparent 50%),radial-gradient(ellipse at 85% 85%,rgba(212,80,10,.04) 0%,transparent 50%)}
+[data-theme="light"] body{background:#eef0f9;background-image:radial-gradient(ellipse at 15% 10%,rgba(67,56,202,.07) 0%,transparent 50%),radial-gradient(ellipse at 85% 85%,rgba(99,102,241,.05) 0%,transparent 50%)}
 [data-theme="light"] .card{background:#ffffff;border-color:rgba(20,60,120,.16)}
 [data-theme="light"] .card::before{background:none}
 [data-theme="light"] .match-card{background:#ffffff;border-color:rgba(20,60,120,.18)}
-[data-theme="light"] .match-card:hover{border-color:rgba(212,80,10,.5);box-shadow:0 6px 24px rgba(0,0,0,.12),0 0 18px rgba(212,80,10,.12)}
+[data-theme="light"] .match-card:hover{border-color:rgba(67,56,202,.45);box-shadow:0 6px 24px rgba(0,0,0,.1),0 0 18px rgba(67,56,202,.12)}
 [data-theme="light"] select,[data-theme="light"] input[type=number]{background:#f0f5fb;border-color:rgba(20,60,120,.22);color:#0b1929}
-[data-theme="light"] select:focus,[data-theme="light"] input:focus{border-color:rgba(212,80,10,.6);box-shadow:0 0 0 3px rgba(212,80,10,.1)}
+[data-theme="light"] select:focus,[data-theme="light"] input:focus{border-color:rgba(67,56,202,.5);box-shadow:0 0 0 3px rgba(67,56,202,.1)}
 [data-theme="light"] .fc{background:#f4f8fd;border-color:rgba(20,60,120,.16)}
-[data-theme="light"] .fc.ok{background:rgba(212,80,10,.05);border-color:rgba(212,80,10,.2)}
+[data-theme="light"] .fc.ok{background:rgba(67,56,202,.05);border-color:rgba(67,56,202,.22)}
 [data-theme="light"] .fc-name{color:var(--accent)}
 [data-theme="light"] .lc{background:#f4f8fd;border-color:rgba(20,60,120,.16)}
 [data-theme="light"] .lc::after{opacity:.5}
 [data-theme="light"] .lcv{color:var(--accent)}
 [data-theme="light"] .mc{background:#f4f8fd;border-color:rgba(20,60,120,.16)}
-[data-theme="light"] .ana-hero{background:linear-gradient(135deg,rgba(212,80,10,.08) 0%,rgba(29,78,216,.05) 100%);border-color:rgba(212,80,10,.3);box-shadow:0 0 18px rgba(212,80,10,.1)}
+[data-theme="light"] .ana-hero{background:linear-gradient(135deg,rgba(67,56,202,.08) 0%,rgba(29,78,216,.05) 100%);border-color:rgba(67,56,202,.3);box-shadow:0 0 18px rgba(67,56,202,.1)}
 [data-theme="light"] .ana-hero::before{background:none}
-[data-theme="light"] .ick-ring{background:rgba(212,80,10,.06);border-color:var(--accent);box-shadow:0 0 16px rgba(212,80,10,.15)}
+[data-theme="light"] .ick-ring{background:rgba(67,56,202,.06);border-color:var(--accent);box-shadow:0 0 16px rgba(67,56,202,.15)}
 [data-theme="light"] .ick-ring-value{color:#0b1929}
 [data-theme="light"] .pb-track{background:#dde5f0}
 [data-theme="light"] .rank-row{background:#f4f8fd;border-color:rgba(20,60,120,.16)}
-[data-theme="light"] .rank-row:hover{border-color:rgba(212,80,10,.4)}
-[data-theme="light"] .rank-hero{background:linear-gradient(135deg,rgba(212,80,10,.1) 0%,rgba(29,78,216,.06) 100%);border-color:rgba(212,80,10,.3)}
-[data-theme="light"] .rank-hero::before{background:none}
+[data-theme="light"] .rank-row:hover{border-color:rgba(67,56,202,.4)}
+[data-theme="light"] .rank-hero{background:linear-gradient(145deg,rgba(67,56,202,.1) 0%,rgba(29,78,216,.06) 55%,rgba(67,56,202,.05) 100%);border-color:rgba(67,56,202,.35)}
+[data-theme="light"] .rank-hero::before{background:radial-gradient(ellipse at 50% -10%,rgba(67,56,202,.08) 0%,transparent 65%)}
+[data-theme="light"] .rank-hero::after{background:linear-gradient(90deg,transparent,rgba(67,56,202,.4),transparent)}
+[data-theme="light"] .rank-hero-stat-pill{background:rgba(67,56,202,.07);border-color:rgba(67,56,202,.2)}
 [data-theme="light"] .date-chip{background:#f0f5fb;border-color:rgba(20,60,120,.22);color:#5a7090}
-[data-theme="light"] .date-chip.active{background:rgba(212,80,10,.1);border-color:rgba(212,80,10,.45);color:var(--accent)}
-[data-theme="light"] .date-chip:hover{background:#e8eef6;border-color:rgba(212,80,10,.35);color:#2a4060}
-[data-theme="light"] .mc-pick-hero{background:linear-gradient(135deg,rgba(212,80,10,.08),rgba(29,78,216,.04));border-color:rgba(212,80,10,.25)}
+[data-theme="light"] .date-chip.active{background:rgba(67,56,202,.1);border-color:rgba(67,56,202,.45);color:var(--accent)}
+[data-theme="light"] .date-chip:hover{background:#e8eef6;border-color:rgba(67,56,202,.35);color:#2a4060}
+[data-theme="light"] .mc-pick-hero{background:linear-gradient(135deg,rgba(67,56,202,.08),rgba(99,102,241,.05));border-color:rgba(67,56,202,.22)}
 [data-theme="light"] .mc-vs{background:rgba(0,0,0,.04);border-color:rgba(20,60,120,.18);color:#5a7090}
-[data-theme="light"] .mc-header{border-color:rgba(20,60,120,.14)}
+[data-theme="light"] .mc-header{border-color:rgba(20,60,120,.14);background:rgba(67,56,202,.04)}
+[data-theme="light"] .mc-pick-divider{background:rgba(67,56,202,.18)}
+[data-theme="light"] .mc-pick-lambda{color:var(--fg3)}
 [data-theme="light"] .wbtn{background:#f0f5fb;border-color:rgba(20,60,120,.22);color:#2a4060}
-[data-theme="light"] .wbtn.active{background:rgba(212,80,10,.1);border-color:rgba(212,80,10,.5);color:var(--accent)}
+[data-theme="light"] .wbtn.active{background:rgba(67,56,202,.1);border-color:rgba(67,56,202,.5);color:var(--accent)}
 [data-theme="light"] .tabs{border-color:rgba(20,60,120,.18)}
 [data-theme="light"] .tab{color:#5a7090}
 [data-theme="light"] .tab.active{color:var(--accent);border-bottom-color:var(--accent);text-shadow:none}
 [data-theme="light"] .trk-btn{background:#f0f5fb;border-color:rgba(20,60,120,.22);color:#2a4060}
 [data-theme="light"] .live-badge{background:rgba(21,128,61,.08);border-color:rgba(21,128,61,.25);color:var(--green)}
-[data-theme="light"] .logo-name{background:linear-gradient(90deg,#0b1929 0%,#2a4060 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="light"] .logo-name{background:linear-gradient(100deg,#3730a3 0%,#4338ca 40%,#6366f1 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 [data-theme="light"] .logo-sub{color:#7090b0}
 [data-theme="light"] .card-title{color:#5a7090;border-color:rgba(20,60,120,.14)}
 [data-theme="light"] .day-hdr{border-color:rgba(20,60,120,.14)}
@@ -84,22 +90,110 @@
 [data-theme="light"] .ts{background:#f4f8fd;border-color:rgba(20,60,120,.16)}
 [data-theme="light"] .pk-item{background:#f4f8fd;border-color:rgba(20,60,120,.16)}
 [data-theme="light"] .header{border-color:rgba(20,60,120,.16)}
-/* Card entrance animation */
-@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.match-card.ready{animation:cardIn .32s ease both}
+/* ── Light theme — overrides adicionales ── */
+/* Header rule */
+[data-theme="light"] .header-rule{background:linear-gradient(90deg,rgba(67,56,202,.45) 0%,rgba(99,102,241,.22) 20%,rgba(67,56,202,.07) 60%,transparent 100%)}
+/* Logo box: mismos colores de marca, sombra más suave */
+@keyframes logoPulseLight{0%,100%{box-shadow:0 0 14px rgba(67,56,202,.28),0 4px 10px rgba(0,0,0,.1)}50%{box-shadow:0 0 24px rgba(67,56,202,.42),0 4px 10px rgba(0,0,0,.1)}}
+[data-theme="light"] .logo-k{box-shadow:0 0 14px rgba(67,56,202,.28),0 4px 10px rgba(0,0,0,.1);animation:logoPulseLight 4s ease-in-out infinite}
+/* Tabs slider glow */
+[data-theme="light"] .tabs-slider{box-shadow:0 0 6px rgba(67,56,202,.28)}
+/* Botón principal: degradado todo-índigo, sin naranja */
+[data-theme="light"] .btn{background:linear-gradient(135deg,#4338ca,#6366f1);box-shadow:0 4px 18px rgba(67,56,202,.28)}
+[data-theme="light"] .btn:hover{box-shadow:0 0 24px rgba(67,56,202,.38),0 6px 18px rgba(0,0,0,.12)}
+/* MC VS chip */
+[data-theme="light"] .mc-vs{background:rgba(67,56,202,.06);border-color:rgba(67,56,202,.18);color:var(--fg3)}
+/* Match card hover */
+[data-theme="light"] .match-card:hover{border-color:rgba(67,56,202,.45)}
+/* Rank row top highlight */
+[data-theme="light"] .rank-row-top{border-color:rgba(67,56,202,.35);background:rgba(67,56,202,.06)}
+/* ICK filter buttons */
+[data-theme="light"] .ick-btn.active{background:linear-gradient(135deg,#4338ca,#6366f1);border-color:#4338ca;color:#fff;box-shadow:0 0 10px rgba(67,56,202,.22)}
+/* Jornada — badges de conteo de día */
+[data-theme="light"] .day-hdr-count{background:rgba(67,56,202,.07);border-color:rgba(67,56,202,.18);color:var(--accent)}
+[data-theme="light"] .day-hdr::after{background:linear-gradient(90deg,#4338ca,#6366f1,transparent)}
+/* Empty states light theme */
+[data-theme="light"] .jornada-empty{border-color:rgba(67,56,202,.2)}
+[data-theme="light"] .es-title{color:var(--fg2)}
+[data-theme="light"] .es-sub{color:var(--fg3)}
+/* Predicción Estelar — adaptada a light */
+[data-theme="light"] .star-block{background:linear-gradient(135deg,rgba(120,53,15,.07),rgba(120,53,15,.02));border-color:rgba(120,53,15,.22)}
+[data-theme="light"] .star-label{color:var(--accent)}
+[data-theme="light"] .star-badge{background:rgba(120,53,15,.07);border-color:rgba(120,53,15,.2);color:#92400e}
+[data-theme="light"] .star-badge small{color:#78350f}
+/* Goleador hot row */
+[data-theme="light"] .gol-row.hot{border-color:rgba(120,53,15,.28);background:rgba(120,53,15,.04)}
+[data-theme="light"] .gol-pct.hot{color:var(--accent)}
+/* Módulo Corners — hot lines */
+[data-theme="light"] .mod-line.hot{border-color:rgba(67,56,202,.35);background:rgba(67,56,202,.06)}
+[data-theme="light"] .mod-line.hot .mod-line-prob,[data-theme="light"] .mod-line.hot .mod-line-pick{color:var(--accent)}
+[data-theme="light"] .mod-load-btn:hover{background:rgba(67,56,202,.09);box-shadow:0 0 10px rgba(67,56,202,.18)}
+/* Tracker picks */
+[data-theme="light"] .pk-pick{background:rgba(67,56,202,.07);color:var(--accent);border-color:rgba(67,56,202,.22)}
+[data-theme="light"] .save-pick-btn{background:rgba(67,56,202,.08);color:var(--accent);border-color:rgba(67,56,202,.28)}
+[data-theme="light"] .save-pick-btn:hover{background:var(--accent);color:#fff}
+[data-theme="light"] .trk-empty{border-color:rgba(67,56,202,.2)}
+/* Parlay */
+[data-theme="light"] .parlay-hdr:hover{background:rgba(67,56,202,.05)}
+[data-theme="light"] .parlay-hdr-label{color:var(--accent)}
+[data-theme="light"] .parlay-hdr-comb{background:rgba(67,56,202,.09);border-color:rgba(67,56,202,.22);color:var(--fg)}
+[data-theme="light"] .parlay-comb-prob{color:var(--accent)}
+/* Recomendación picks tags */
+[data-theme="light"] .rec-mkt.primary{background:rgba(67,56,202,.08);border-color:rgba(67,56,202,.28);color:var(--accent)}
+/* dbadge (Jornada date tag) */
+[data-theme="light"] .dbadge{background:rgba(67,56,202,.07);border-color:rgba(67,56,202,.2);color:var(--accent)}
+/* Ana hero label */
+[data-theme="light"] .ana-hero-label{color:var(--accent)}
+/* Card ::before shimmer — quitado en light */
+[data-theme="light"] .card::before{background:none}
+/* Card entrance animation — staggered */
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.match-card.ready{animation:cardIn .38s cubic-bezier(.22,.68,0,1.2) both}
+.match-card.ready:nth-child(1){animation-delay:.04s}
+.match-card.ready:nth-child(2){animation-delay:.09s}
+.match-card.ready:nth-child(3){animation-delay:.14s}
+.match-card.ready:nth-child(4){animation-delay:.19s}
+.match-card.ready:nth-child(5){animation-delay:.24s}
+.match-card.ready:nth-child(6){animation-delay:.29s}
+.match-card.ready:nth-child(7){animation-delay:.34s}
+.match-card.ready:nth-child(8){animation-delay:.38s}
+.match-card.ready:nth-child(n+9){animation-delay:.42s}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100vh;padding:16px 16px 40px;background-image:radial-gradient(ellipse at 15% 10%,rgba(59,130,246,.1) 0%,transparent 50%),radial-gradient(ellipse at 85% 85%,rgba(249,115,22,.07) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(59,130,246,.04) 0%,transparent 70%);}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100vh;padding:16px 16px 40px;background-image:radial-gradient(ellipse at 20% 8%,rgba(99,102,241,.13) 0%,transparent 52%),radial-gradient(ellipse at 80% 90%,rgba(129,140,248,.08) 0%,transparent 50%),radial-gradient(ellipse at 55% 45%,rgba(67,56,202,.05) 0%,transparent 65%);}
 .wrap{max-width:1200px;margin:0 auto}
 
 /* ── Header ── */
-.header{display:flex;align-items:center;justify-content:space-between;padding:20px 0 22px;border-bottom:1px solid var(--border);margin-bottom:28px;position:relative}
-.header::after{content:'';position:absolute;bottom:-1px;left:0;width:120px;height:1px;background:linear-gradient(90deg,var(--accent),transparent)}
-.logo{display:flex;align-items:center;gap:14px}
-.logo-k{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),#ea580c);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:800;font-size:19px;color:#fff;box-shadow:var(--glow-o),0 4px 16px rgba(0,0,0,.5);letter-spacing:-.02em}
-.logo-name{font-size:19px;font-weight:800;letter-spacing:.04em;background:linear-gradient(90deg,#fff 0%,var(--fg2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.logo-sub{font-size:9px;color:var(--fg3);text-transform:uppercase;letter-spacing:2.5px;margin-top:2px}
-.live-badge{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:var(--green);background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);border-radius:20px;padding:6px 14px;font-family:var(--mono);box-shadow:0 0 16px rgba(52,211,153,.08)}
-.live-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;box-shadow:0 0 8px var(--green)}
+/* ── Header ── */
+@keyframes logoSheen{0%{transform:translateX(-100%) skewX(-18deg)}100%{transform:translateX(260%) skewX(-18deg)}}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 22px rgba(129,140,248,.35),0 4px 20px rgba(0,0,0,.55)}50%{box-shadow:0 0 38px rgba(129,140,248,.55),0 4px 20px rgba(0,0,0,.55)}}
+@keyframes liveDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+@keyframes tabSlide{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+.header{display:flex;align-items:center;justify-content:space-between;padding:22px 0 24px;margin-bottom:0;position:relative}
+.header-rule{height:1px;background:linear-gradient(90deg,rgba(129,140,248,.7) 0%,rgba(99,102,241,.35) 20%,rgba(129,140,248,.08) 60%,transparent 100%);margin-bottom:28px}
+.logo{display:flex;align-items:center;gap:16px}
+.logo-k{
+  width:46px;height:46px;
+  background:linear-gradient(135deg,#4f46e5 0%,#818cf8 60%,#a5b4fc 100%);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 28px rgba(129,140,248,.4),0 4px 20px rgba(0,0,0,.55);
+  animation:logoPulse 4s ease-in-out infinite;
+  position:relative;overflow:hidden;flex-shrink:0
+}
+.logo-k::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.22) 50%,transparent 70%);animation:logoSheen 4s ease-in-out 1.2s infinite}
+.logo-k svg{width:26px;height:26px;flex-shrink:0}
+.logo-wordmark{display:flex;flex-direction:column;gap:1px}
+.logo-name{
+  font-size:24px;font-weight:800;letter-spacing:.14em;font-family:var(--cond);text-transform:uppercase;line-height:1;
+  background:linear-gradient(100deg,#c7d2fe 0%,#a5b4fc 35%,#818cf8 65%,#6366f1 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.logo-sub{font-size:9px;color:var(--fg3);text-transform:uppercase;letter-spacing:2.8px;margin-top:3px;font-family:var(--mono)}
+.logo-version{display:inline-block;font-size:8px;font-weight:800;font-family:var(--mono);letter-spacing:.06em;color:rgba(var(--la),.7);background:rgba(var(--la),.1);border:1px solid rgba(var(--la),.22);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;position:relative;top:-1px}
+
+.live-badge{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:700;color:var(--green);background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.22);border-radius:20px;padding:5px 13px;font-family:var(--mono);letter-spacing:.06em}
+.live-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:liveDot 1.4s ease-in-out infinite;box-shadow:0 0 6px var(--green);flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
 
 /* ── Layout ── */
@@ -113,7 +207,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);min-height:100
 /* ── Form controls ── */
 label{display:block;font-size:10px;font-weight:600;color:var(--fg3);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px}
 select,input[type=number]{width:100%;background:rgba(9,22,40,.8);border:1px solid var(--border2);border-radius:9px;padding:10px 13px;font-family:var(--sans);font-size:14px;color:var(--fg);margin-bottom:14px;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;-webkit-appearance:none}
-select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px rgba(249,115,22,.1)}
+select:focus,input:focus{border-color:rgba(129,140,248,.6);box-shadow:0 0 0 3px rgba(129,140,248,.12)}
 .sw{position:relative;margin-bottom:14px}
 .sw select{margin-bottom:0}
 .sw::after{content:"▾";position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--fg3);pointer-events:none;font-size:11px}
@@ -121,10 +215,10 @@ select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px r
 .vs{text-align:center;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--fg3);padding-top:20px}
 .window-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
 .wbtn{flex:1;padding:8px;border:1px solid var(--border2);border-radius:7px;background:rgba(9,22,40,.6);color:var(--fg2);font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer;transition:all .18s}
-.wbtn.active{border-color:rgba(249,115,22,.5);background:rgba(249,115,22,.1);color:var(--accent);font-weight:700;box-shadow:0 0 12px rgba(249,115,22,.12)}
+.wbtn.active{border-color:rgba(129,140,248,.5);background:rgba(129,140,248,.1);color:var(--accent);font-weight:700;box-shadow:0 0 12px rgba(129,140,248,.15)}
 .fc-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:16px}
 .fc{background:rgba(9,22,40,.7);border:1px solid var(--border);border-radius:10px;padding:12px;min-height:78px}
-.fc.ok{border-color:rgba(249,115,22,.25);background:rgba(249,115,22,.04)}
+.fc.ok{border-color:rgba(129,140,248,.28);background:rgba(129,140,248,.05)}
 .fc.err{border-color:rgba(248,113,113,.3)}
 .fc-name{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:7px;line-height:1.3;word-break:break-word}
 .fc-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:7px}
@@ -150,11 +244,17 @@ select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px r
 .og input{margin-bottom:0;font-family:var(--mono);font-size:12px;padding:8px 10px}
 .lbl10{font-size:10px;color:var(--fg3);margin-bottom:4px;letter-spacing:.5px}
 .btn{width:100%;background:linear-gradient(135deg,var(--accent),#ea580c);color:#fff;border:none;border-radius:10px;padding:14px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:all .2s;letter-spacing:.03em;box-shadow:var(--glow-o),0 4px 16px rgba(0,0,0,.4)}
-.btn:hover{transform:translateY(-1px);box-shadow:0 0 32px rgba(249,115,22,.35),0 6px 20px rgba(0,0,0,.5)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 0 32px rgba(129,140,248,.35),0 6px 20px rgba(0,0,0,.5)}
 .btn:disabled{opacity:.3;cursor:not-allowed;box-shadow:none;transform:none}
 
+/* ── Empty states — sistema unificado ── */
+.es{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding:52px 24px}
+.es-icon{font-size:34px;opacity:.28;margin-bottom:6px;line-height:1}
+.es-title{font-size:15px;font-weight:800;color:var(--fg2);font-family:var(--cond);letter-spacing:.04em;text-transform:uppercase}
+.es-sub{font-size:11px;color:var(--fg3);line-height:1.7;max-width:270px;font-family:var(--mono)}
+
 /* ── Results ── */
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;color:var(--fg3);text-align:center;gap:12px}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:380px;color:var(--fg3);text-align:center}
 .empty .icon{font-size:38px;opacity:.3}
 .mh{text-align:center;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border)}
 .mteams{font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;text-align:center;line-height:1.3;letter-spacing:-.01em}
@@ -165,7 +265,7 @@ select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px r
 .lc{background:rgba(9,22,40,.7);border-radius:12px;padding:16px 18px;border:1px solid var(--border);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;min-height:88px;backdrop-filter:blur(8px)}
 .lc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--blue));opacity:.7}
 .lcn{font-size:9px;color:var(--fg3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;font-weight:700}
-.lcv{font-family:var(--mono);font-size:32px;font-weight:800;color:var(--accent);line-height:1;letter-spacing:.02em;text-shadow:0 0 20px rgba(249,115,22,.3)}
+.lcv{font-family:var(--mono);font-size:32px;font-weight:800;color:var(--accent);line-height:1;letter-spacing:.02em;text-shadow:0 0 20px rgba(129,140,248,.35)}
 .pb-block{margin-bottom:20px}
 .pb-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--fg3);margin-bottom:14px;font-weight:700;display:flex;align-items:center;gap:8px}
 .pb-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -239,18 +339,18 @@ select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px r
 .ana-vs-bubble{width:36px;height:36px;border-radius:50%;background:var(--bg4);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--fg3);font-family:var(--mono);font-weight:700;letter-spacing:1px}
 .ana-meta-row{display:flex;align-items:center;justify-content:center;gap:8px}
 /* Hero — 2-column pick + ICK ring */
-.ana-hero{background:linear-gradient(135deg,rgba(249,115,22,.1) 0%,rgba(59,130,246,.06) 100%);border:1.5px solid rgba(249,115,22,.35);border-radius:20px;padding:22px 20px 18px;margin-bottom:22px;position:relative;overflow:hidden;box-shadow:inset 0 0 60px rgba(249,115,22,.06),var(--glow-o)}
-.ana-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 10%,rgba(249,115,22,.12) 0%,transparent 55%);pointer-events:none}
+.ana-hero{background:linear-gradient(135deg,rgba(129,140,248,.1) 0%,rgba(59,130,246,.06) 100%);border:1.5px solid rgba(129,140,248,.35);border-radius:20px;padding:22px 20px 18px;margin-bottom:22px;position:relative;overflow:hidden;box-shadow:inset 0 0 60px rgba(129,140,248,.06),var(--glow-a)}
+.ana-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 90% 10%,rgba(129,140,248,.12) 0%,transparent 55%);pointer-events:none}
 .ana-hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:8px}
 .ana-hero-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-family:var(--mono)}
 .ana-hero-grid{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;margin-bottom:16px}
 .ana-hero-left{min-width:0}
 /* ICK ring */
-.ick-ring{width:96px;height:96px;border-radius:50%;border:4px solid var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(249,115,22,.07);flex-shrink:0;box-shadow:0 0 28px rgba(249,115,22,.2),inset 0 0 20px rgba(249,115,22,.06);position:relative;z-index:1;transition:border-color .4s}
+.ick-ring{width:96px;height:96px;border-radius:50%;border:4px solid var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(129,140,248,.07);flex-shrink:0;box-shadow:0 0 28px rgba(129,140,248,.2),inset 0 0 20px rgba(129,140,248,.06);position:relative;z-index:1;transition:border-color .4s}
 .ick-ring-value{font-family:var(--mono);font-size:30px;font-weight:800;color:var(--fg);line-height:1;letter-spacing:-.02em}
 .ick-ring-lbl{font-size:8px;color:var(--fg3);text-transform:uppercase;letter-spacing:2px;margin-top:2px;font-weight:700}
 .ana-hero-bottom{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.ana-ick-track-row{border-top:1px solid rgba(249,115,22,.18);padding-top:13px}
+.ana-ick-track-row{border-top:1px solid rgba(129,140,248,.18);padding-top:13px}
 .ana-ick-track-labels{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:8px;flex-wrap:wrap}
 /* Stats 2-col layout */
 .ana-stats-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:16px;margin-bottom:22px;align-items:start}
@@ -272,6 +372,51 @@ select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px r
 .star-badge{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:7px;padding:6px 13px;flex-shrink:0;text-align:center;white-space:nowrap}
 .star-badge small{display:block;font-size:9px;font-weight:400;color:var(--fg3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
 @media(max-width:480px){.star-score{font-size:26px}.star-block{gap:10px;padding:12px 14px}}
+
+/* ── Mobile responsive — ≤600px ── */
+@media(max-width:600px){
+  body{padding:10px 10px 32px}
+  .card{padding:16px}
+  .header{padding:16px 0 18px;flex-wrap:wrap;gap:10px}
+  .logo-name{font-size:20px;letter-spacing:.1em}
+  .logo-sub{display:none}
+  .logo-version{display:none}
+  /* Tabs: scrollable en mobile */
+  .tabs{overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{padding:10px 16px;letter-spacing:.8px;font-size:12px;white-space:nowrap;flex-shrink:0}
+  /* Match cards: una columna segura */
+  .match-cards{grid-template-columns:1fr}
+  /* Ranking hero */
+  .rank-hero{padding:16px}
+  .rank-hero-match{font-size:18px}
+  .rank-hero-pick{font-size:26px}
+}
+
+/* ── Mobile responsive — ≤440px (phones estándar) ── */
+@media(max-width:440px){
+  body{padding:8px 8px 28px}
+  .card{padding:12px}
+  .logo-k{width:38px;height:38px;border-radius:10px}
+  .logo-k svg{width:22px;height:22px}
+  .logo-name{font-size:18px}
+  .logo{gap:10px}
+  /* Live badge: mostrar solo el dot */
+  .live-badge{padding:5px 9px;font-size:9px}
+  /* Pick hero en cards */
+  .mc-pick-prob{font-size:38px}
+  .mc-pick-label{font-size:20px}
+  .mc-ick-badge{width:54px;height:54px}
+  /* Odds grid: 2 col en mobile pequeño */
+  .og{grid-template-columns:1fr 1fr}
+  /* Card body padding */
+  .mc-body{padding:10px 12px 10px}
+  .mc-header{padding:8px 12px}
+  /* Form selects */
+  select,input[type=number]{font-size:13px;padding:9px 11px}
+  /* Team row */
+  .team-row{grid-template-columns:1fr 28px 1fr;gap:4px}
+}
 .sc{background:var(--bg3);border-radius:7px;padding:8px 4px;text-align:center;border:1px solid var(--border)}
 .sc-score{font-size:15px;font-weight:700;letter-spacing:.04em;color:var(--fg);font-variant-numeric:tabular-nums;font-family:var(--mono)}
 .sc-pct{font-size:9px;color:var(--fg3);margin-top:2px}
@@ -306,19 +451,27 @@ select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px r
 .save-pick-btn{width:100%;background:rgba(245,158,11,.1);color:var(--accent);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:10px;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;transition:all .15s;display:none}
 .save-pick-btn:hover{background:var(--accent);color:#080910}
 .trk-panel{display:none;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;box-shadow:var(--shadow);margin-top:18px;max-width:1200px;margin-left:auto;margin-right:auto}
-.trk-panel.open{display:block}
+.trk-panel.open{display:block;animation:slideDown .28s cubic-bezier(.22,.68,0,1.1) both}
 .trk-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border)}
 .trk-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
 @media(max-width:500px){.trk-stats{grid-template-columns:repeat(2,1fr)}}
-.ts{background:var(--bg3);border-radius:9px;padding:12px;text-align:center;border:1px solid var(--border)}
-.ts-v{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--accent)}
-.ts-l{font-size:9px;color:var(--fg3);text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+.ts{background:var(--bg3);border-radius:9px;padding:12px 10px 10px;text-align:center;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:2px}
+.ts-v{font-family:var(--mono);font-size:26px;font-weight:800;color:var(--accent);line-height:1;letter-spacing:.02em}
+.ts-l{font-size:9px;color:var(--fg3);text-transform:uppercase;letter-spacing:1px;margin-top:2px;font-family:var(--cond)}
+.ts-streak{font-size:9px;color:var(--fg3);font-family:var(--mono);letter-spacing:.04em;margin-top:2px}
+/* Sparkline container */
+.trk-sparkline{margin:0 0 14px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:10px}
+.trk-sparkline-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--fg3);font-family:var(--cond);margin-bottom:8px}
+/* Enhanced bars */
+.trk-bar-row{display:flex;flex-direction:column;gap:4px;font-size:11px}
+.trk-bar-track{height:6px;border-radius:3px;background:var(--bg4);overflow:hidden;flex:1}
+.trk-bar-fill{height:100%;border-radius:3px;transition:width .5s cubic-bezier(.22,.68,0,1.1)}
 .pk-list{display:flex;flex-direction:column;gap:8px}
 .pk-item{display:flex;align-items:center;gap:10px;background:var(--bg3);border-radius:9px;padding:11px 13px;border:1px solid var(--border);flex-wrap:wrap}
 .pk-match{flex:1;min-width:150px}
 .pk-match-name{font-size:12px;font-weight:700;word-break:break-word}
 .pk-match-meta{font-size:10px;color:var(--fg3);margin-top:2px;font-family:var(--mono)}
-.pk-pick{font-size:11px;font-weight:700;background:rgba(245,158,11,.1);color:var(--accent);border-radius:5px;padding:3px 8px;border:1px solid rgba(245,158,11,.25);font-family:var(--mono)}
+.pk-pick{font-size:11px;font-weight:700;background:rgba(129,140,248,.1);color:var(--accent);border-radius:5px;padding:3px 8px;border:1px solid rgba(129,140,248,.25);font-family:var(--mono)}
 .pk-prob{font-family:var(--mono);font-size:12px;color:var(--fg3);min-width:46px;text-align:right}
 .pk-res{display:flex;gap:5px}
 .pk-res button{border:none;border-radius:5px;padding:4px 9px;font-family:var(--sans);font-size:10px;font-weight:700;cursor:pointer;transition:all .15s;opacity:.4}
@@ -329,52 +482,74 @@ select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px r
 .pk-res button.active{opacity:1;font-weight:800}
 .pk-del{background:none;border:none;color:var(--fg3);cursor:pointer;font-size:14px;opacity:.4;padding:2px 6px}
 .pk-del:hover{opacity:1;color:var(--red)}
-.trk-empty{text-align:center;padding:40px 20px;color:var(--fg3);font-size:12px;border:1px dashed var(--border);border-radius:10px;line-height:1.8}
+.trk-empty{border-radius:12px;border:1px dashed var(--border)}
 
 /* ── Tabs ── */
-.tabs{display:flex;gap:0;background:transparent;border-radius:0;padding:0;margin-bottom:26px;border:none;border-bottom:1px solid var(--border);}
-.tab{flex:none;padding:11px 22px;border:none;border-radius:0;background:none;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--fg3);cursor:pointer;transition:all .2s;text-align:center;letter-spacing:1.5px;text-transform:uppercase;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.tabs{display:flex;gap:0;background:transparent;border-radius:0;padding:0;margin-bottom:26px;border:none;border-bottom:1px solid var(--border);position:relative}
+.tabs-slider{position:absolute;bottom:-1px;height:2px;background:linear-gradient(90deg,#6366f1,#a5b4fc);border-radius:2px;transition:left .28s cubic-bezier(.22,.68,0,1.1),width .28s cubic-bezier(.22,.68,0,1.1);box-shadow:0 0 10px rgba(129,140,248,.5)}
+.tab{flex:none;padding:11px 24px;border:none;border-radius:0;background:none;font-family:var(--cond);font-size:13px;font-weight:600;color:var(--fg3);cursor:pointer;transition:color .2s;text-align:center;letter-spacing:1.8px;text-transform:uppercase;border-bottom:2px solid transparent;margin-bottom:-1px}
 .tab:hover{color:var(--fg2)}
-.tab.active{background:transparent;color:var(--accent);font-weight:700;box-shadow:none;border-bottom-color:var(--accent);text-shadow:0 0 12px rgba(249,115,22,.4)}
+.tab.active{background:transparent;color:var(--accent);font-weight:700;box-shadow:none;border-bottom-color:transparent;text-shadow:0 0 14px rgba(129,140,248,.38)}
+
+/* ── Transiciones de sección ── */
+@keyframes sectionIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sectionOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-10px)}}
+
+.section-entering{animation:sectionIn .3s cubic-bezier(.22,.68,0,1.1) both}
+.section-leaving{animation:sectionOut .18s ease-in both;pointer-events:none}
 
 /* ── Jornada ── */
 .jornada-wrap{display:none}
 .jornada-wrap.open{display:block}
+.jornada-wrap.section-entering{display:block}
 /* Date rail */
 .date-nav{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:4px 0 6px;scrollbar-width:none;-ms-overflow-style:none;flex-shrink:1;min-width:0}
 .date-nav::-webkit-scrollbar{display:none}
 .date-chip{flex-shrink:0;padding:6px 13px;border-radius:20px;font-size:10px;font-weight:700;font-family:var(--mono);letter-spacing:.8px;text-transform:uppercase;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--fg3);transition:all .18s;white-space:nowrap}
-.date-chip:hover{border-color:rgba(249,115,22,.4);color:var(--fg);background:var(--bg4)}
-.date-chip.active{background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.5);color:var(--accent);box-shadow:0 0 12px rgba(249,115,22,.15)}
+.date-chip:hover{border-color:rgba(129,140,248,.4);color:var(--fg);background:var(--bg4)}
+.date-chip.active{background:rgba(129,140,248,.12);border-color:rgba(129,140,248,.5);color:var(--accent);box-shadow:0 0 12px rgba(129,140,248,.18)}
 .day-section{margin-bottom:36px}
 .day-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 0 16px;margin-bottom:20px;border-bottom:3px solid var(--border);position:relative}
-.day-hdr::after{content:'';position:absolute;bottom:-3px;left:0;width:110px;height:4px;border-radius:2px;background:var(--accent)}
-.day-hdr-lbl{font-size:20px;font-weight:800;color:var(--fg);letter-spacing:-.01em}
+.day-hdr::after{content:'';position:absolute;bottom:-3px;left:0;width:110px;height:4px;border-radius:2px;background:linear-gradient(90deg,#6366f1,#818cf8,transparent)}
+.day-hdr-lbl{font-size:22px;font-weight:800;color:var(--fg);letter-spacing:.02em;font-family:var(--cond);text-transform:uppercase}
 .day-hdr-count{font-size:13px;color:var(--fg3);font-family:var(--mono);background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.15);border-radius:20px;padding:5px 14px}
 .match-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
 
 /* Card redesign — pick hero layout */
 .match-card{background:rgba(6,14,28,.8);border:1px solid var(--border);border-radius:16px;padding:0;box-shadow:var(--shadow2);cursor:pointer;transition:all .22s;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);overflow:hidden}
-.match-card:hover{border-color:rgba(249,115,22,.35);transform:translateY(-3px);box-shadow:var(--shadow),0 0 28px rgba(249,115,22,.1)}
+.match-card:hover{border-color:rgba(129,140,248,.45);transform:translateY(-3px);box-shadow:var(--shadow),0 0 28px rgba(129,140,248,.14)}
 .match-card.loading{opacity:.45;pointer-events:none}
 .match-card.no-data{opacity:.35;cursor:default;pointer-events:none}
 
-.mc-header{padding:14px 18px 12px;border-bottom:2px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.mc-time{font-size:12px;color:var(--fg3);font-family:var(--mono);letter-spacing:.8px;text-transform:uppercase}
-.mc-ick-badge{font-size:13px;font-weight:700;font-family:var(--mono);padding:4px 12px;border-radius:20px;border:1px solid}
+.mc-header{padding:10px 14px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.18)}
+.mc-time{font-size:11px;color:var(--fg3);font-family:var(--mono);letter-spacing:.8px;text-transform:uppercase}
+.mc-ick-badge{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;flex-shrink:0}
 
 .mc-body{padding:14px 16px 12px}
-.mc-teams{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
-.mc-team{font-size:18px;font-weight:800;color:var(--fg);line-height:1.3;flex:1;word-break:break-word}
+.mc-teams{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.mc-team{font-size:19px;font-weight:700;color:var(--fg);line-height:1.2;flex:1;word-break:break-word;font-family:var(--cond);letter-spacing:.02em}
 .mc-team.away{text-align:right}
 .mc-vs{font-size:13px;color:var(--fg3);font-weight:700;flex-shrink:0;text-align:center;font-family:var(--mono);background:rgba(255,255,255,.04);border-radius:6px;padding:5px 10px;border:1px solid var(--border)}
 
-.mc-pick-hero{background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(59,130,246,.06));border:1px solid rgba(249,115,22,.2);border-radius:12px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.mc-pick-label{font-size:19px;font-weight:800;color:var(--accent);font-family:var(--mono);letter-spacing:.02em}
+.mc-pick-hero{background:linear-gradient(135deg,rgba(129,140,248,.12),rgba(99,102,241,.05));border:1px solid rgba(129,140,248,.28);border-radius:12px;padding:10px 14px 12px;margin-bottom:10px}
+.mc-pick-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+.mc-pick-label{font-size:26px;font-weight:900;color:var(--accent);font-family:var(--cond);letter-spacing:.08em;text-transform:uppercase;line-height:1}
 .mc-pick-right{text-align:right;flex-shrink:0}
-.mc-pick-prob{font-family:var(--mono);font-size:32px;font-weight:800;color:var(--fg);line-height:1;display:block}
-.mc-pick-prob-lbl{font-size:12px;color:var(--fg3);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.mc-pick-prob{font-family:var(--cond);font-size:48px;font-weight:900;color:var(--fg);line-height:1;display:block;letter-spacing:-.01em}
+.mc-pick-prob-lbl{font-size:10px;color:var(--fg3);text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
+.mc-pick-divider{height:1px;background:rgba(129,140,248,.18);margin:0 -2px 6px}
+.mc-pick-lambda{font-size:9px;color:var(--fg3);font-family:var(--mono);opacity:.7;display:flex;align-items:center;gap:6px}
 
+/* Resultado probable */
+.mc-score-row{display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(129,140,248,.05);border:1px solid rgba(129,140,248,.14);border-radius:8px;margin-bottom:9px}
+.mc-score-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--fg3);font-family:var(--mono);flex-shrink:0}
+.mc-score-val{font-family:var(--mono);font-size:18px;font-weight:800;line-height:1;letter-spacing:.05em;font-variant-numeric:tabular-nums;flex-shrink:0}
+.mc-score-res{font-size:10px;font-weight:600;color:var(--fg3);flex:1;font-family:var(--cond);text-transform:uppercase;letter-spacing:.5px}
+.mc-score-pct{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--fg3);flex-shrink:0;background:var(--bg3);border-radius:4px;padding:2px 6px}
+[data-theme="light"] .mc-score-row{background:rgba(67,56,202,.04);border-color:rgba(67,56,202,.14)}
+[data-theme="light"] .mc-score-pct{background:rgba(67,56,202,.07)}
 .mc-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .mc-markets{display:flex;gap:5px;flex-wrap:wrap}
 .mc-mkt{font-size:12px;padding:4px 10px;border-radius:20px;font-weight:600;border:1px solid;font-family:var(--mono)}
@@ -384,23 +559,47 @@ select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px r
 .mc-ev{display:flex;align-items:center;gap:6px}
 
 .mc-loading{text-align:center;padding:40px 16px;font-size:10px;color:var(--fg3)}
-.jornada-empty{text-align:center;padding:80px 20px;color:var(--fg3);font-size:12px;border:1px dashed rgba(59,130,246,.15);border-radius:16px;line-height:2;margin-top:12px}
+.jornada-empty{margin-top:12px;border-radius:16px;border:1px dashed rgba(129,140,248,.16)}
 .ick-filter{display:flex;align-items:center;gap:6px;margin-top:10px;flex-wrap:wrap}
-.rank-no-pick{text-align:center;padding:14px;font-size:11px;color:var(--fg3);background:var(--card);border:1px dashed var(--border);border-radius:12px;margin-bottom:18px;font-family:var(--mono)}
+.rank-no-pick{border-radius:12px;border:1px dashed var(--border);margin-bottom:18px}
 .ick-filter-lbl{font-size:9px;font-weight:700;color:var(--fg3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-right:2px}
 .ick-btn{font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--fg3);cursor:pointer;font-family:var(--mono);transition:all .15s}
 .ick-btn:hover{border-color:var(--accent);color:var(--accent)}
-.ick-btn.active{background:linear-gradient(135deg,var(--accent),#ea580c);border-color:var(--accent);color:#fff;box-shadow:0 0 14px rgba(249,115,22,.3)}
+.ick-btn.active{background:linear-gradient(135deg,#6366f1,#818cf8);border-color:#818cf8;color:#fff;box-shadow:0 0 14px rgba(129,140,248,.35)}
 .ranking-loading{text-align:center;padding:18px;font-size:11px;color:var(--fg3);background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:18px}
 
 /* ── Vista compacta toggle ── */
 .view-toggle{display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:3px}
 .vt-btn{background:none;border:none;cursor:pointer;padding:5px 8px;border-radius:6px;color:var(--fg3);font-size:12px;transition:all .15s;line-height:1}
 .vt-btn.active{background:rgba(var(--la),.15);color:rgb(var(--la))}
+
+/* ── Micro-feedback: press states ── */
+@keyframes ick-pulse{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+@keyframes btn-confirm{0%{transform:scale(1)}30%{transform:scale(.96)}100%{transform:scale(1)}}
+.btn:not(:disabled):active{transform:scale(.97) translateY(1px);box-shadow:0 1px 6px rgba(0,0,0,.3)!important;transition:transform .08s,box-shadow .08s}
+.btn.loading{opacity:.72;cursor:wait;pointer-events:none}
+.ick-btn:active{transform:scale(.92);transition:transform .08s}
+.wbtn:active{transform:scale(.94);opacity:.8;transition:transform .08s,opacity .08s}
+.tab:active{opacity:.7;transition:opacity .08s}
+.mod-load-btn:active{transform:scale(.95);transition:transform .08s}
+.mod-load-btn.loading{opacity:.6;cursor:wait;pointer-events:none}
+.trk-btn:active{transform:scale(.95);transition:transform .08s}
+.date-chip:active{transform:scale(.94);transition:transform .08s}
+.vt-btn:active{transform:scale(.9);transition:transform .08s}
+.fc-chip:active{transform:scale(.96);transition:transform .08s}
+.pk-del:active{transform:scale(.85);transition:transform .08s}
+.r-w:active,.r-l:active,.r-p:active{transform:scale(.84);transition:transform .06s}
+.r-w.pulse,.r-l.pulse,.r-p.pulse{animation:ick-pulse .35s ease-out}
+.match-card:active{transform:translateY(1px);transition:transform .1s}
 .match-cards.compact{grid-template-columns:1fr;gap:8px}
 .match-cards.compact .mc-body{padding:10px 14px 10px}
-.match-cards.compact .mc-pick-hero{padding:9px 12px;margin-bottom:7px}
+.match-cards.compact .mc-pick-hero{padding:8px 12px 10px;margin-bottom:7px}
+.match-cards.compact .mc-pick-label{font-size:18px}
+.match-cards.compact .mc-pick-prob{font-size:36px}
 .match-cards.compact .mc-team{font-size:13px}
+.match-cards.compact .mc-score-row{padding:5px 8px;margin-bottom:6px}
+.match-cards.compact .mc-score-val{font-size:14px}
+.match-cards.compact .mc-score-lbl{display:none}
 
 /* ── Skeleton loading ── */
 @keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
@@ -437,31 +636,38 @@ select:focus,input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 0 3px r
 .poisson-axis-title{font-size:13px;color:var(--fg3);text-align:center;letter-spacing:.5px;margin-top:8px}
 
 /* ── Ranking del día ── */
+@keyframes heroIn{0%{opacity:0;transform:translateY(20px) scale(.97)}60%{transform:translateY(-3px) scale(1.008)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes heroPulse{0%,100%{box-shadow:0 0 28px var(--lag),0 8px 32px rgba(0,0,0,.25),inset 0 0 40px rgba(var(--la),.04)}50%{box-shadow:0 0 44px var(--lag),0 8px 32px rgba(0,0,0,.25),inset 0 0 40px rgba(var(--la),.07)}}
+@keyframes badgePulse{0%,100%{opacity:.8;letter-spacing:.15em}50%{opacity:1;letter-spacing:.18em}}
+@keyframes pickGlow{0%,100%{text-shadow:0 0 20px rgba(var(--la),.4)}50%{text-shadow:0 0 36px rgba(var(--la),.7),0 0 60px rgba(var(--la),.25)}}
 #rankingSection{margin-bottom:22px}
 .rank-sticky-wrap{position:relative}
-.rank-hero{background:linear-gradient(135deg,rgba(var(--la),.12) 0%,rgba(59,130,246,.08) 100%);border:1.5px solid rgba(var(--la),.35);border-radius:16px;padding:20px 22px;margin-bottom:16px;text-align:center;position:relative;overflow:hidden;box-shadow:0 0 24px var(--lag),inset 0 0 40px rgba(var(--la),.04)}
-.rank-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(var(--la),.08) 0%,transparent 70%);pointer-events:none}
-.rank-hero-badge{font-size:13px;font-weight:800;letter-spacing:.15em;color:var(--accent);font-family:var(--mono);margin-bottom:10px;text-transform:uppercase;opacity:.8}
-.rank-hero-match{font-size:17px;font-weight:600;color:var(--fg2);margin-bottom:10px}
+.rank-hero{background:linear-gradient(145deg,rgba(var(--la),.15) 0%,rgba(59,130,246,.09) 55%,rgba(var(--la),.06) 100%);border:1.5px solid rgba(var(--la),.4);border-radius:20px;padding:24px 22px 20px;margin-bottom:16px;text-align:center;position:relative;overflow:hidden;animation:heroIn .55s cubic-bezier(.22,.68,0,1.15) both,heroPulse 4s ease-in-out 1s infinite}
+.rank-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -10%,rgba(var(--la),.14) 0%,transparent 65%);pointer-events:none}
+.rank-hero::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(var(--la),.6),transparent);pointer-events:none}
+.rank-hero-badge{font-size:10px;font-weight:800;letter-spacing:.15em;color:var(--accent);font-family:var(--mono);margin-bottom:12px;text-transform:uppercase;animation:badgePulse 3s ease-in-out infinite;display:inline-block}
+.rank-hero-match{font-size:16px;font-weight:600;color:var(--fg2);margin-bottom:4px;line-height:1.3}
 .rank-hero-vs{color:var(--fg3);font-weight:400;margin:0 6px}
-.rank-hero-pick{font-size:32px;font-weight:800;color:var(--accent);font-family:var(--mono);margin-bottom:12px;letter-spacing:.04em;text-shadow:0 0 20px rgba(var(--la),.4)}
-.rank-hero-stats{display:flex;justify-content:center;gap:18px}
+.rank-hero-divider{width:32px;height:1.5px;background:linear-gradient(90deg,transparent,rgba(var(--la),.5),transparent);margin:10px auto}
+.rank-hero-pick{font-size:40px;font-weight:800;color:var(--accent);font-family:var(--cond);margin-bottom:14px;letter-spacing:.08em;text-transform:uppercase;animation:pickGlow 3.5s ease-in-out 0.5s infinite;line-height:1.1}
+.rank-hero-stats{display:flex;justify-content:center;align-items:center;gap:6px}
+.rank-hero-stat-pill{background:rgba(var(--la),.1);border:1px solid rgba(var(--la),.25);border-radius:20px;padding:4px 12px;display:flex;align-items:center;gap:6px}
 .rank-hero-prob{font-size:13px;font-weight:700;color:var(--fg2);font-family:var(--mono)}
 .rank-hero-ick{font-size:13px;font-weight:700;font-family:var(--mono)}
-.rank-hero-ev{margin-top:8px}
+.rank-hero-ev{margin-top:10px}
 .rank-list-hdr{font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--fg3);font-family:var(--mono);text-transform:uppercase;margin-bottom:8px;padding-left:2px}
 .rank-list{display:flex;flex-direction:column;gap:6px}
 .rank-row{display:flex;align-items:center;gap:10px;background:rgba(6,14,28,.7);border:1px solid var(--border);border-radius:10px;padding:10px 14px;cursor:default;transition:all .18s;backdrop-filter:blur(8px)}
-.rank-row:hover{border-color:rgba(249,115,22,.35);transform:translateX(2px)}
-.rank-row-top{border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.04)}
-.rank-pos{font-size:11px;font-weight:800;color:var(--fg3);font-family:var(--mono);min-width:22px;flex-shrink:0}
+.rank-row:hover{border-color:rgba(129,140,248,.38);transform:translateX(2px)}
+.rank-row-top{border-color:rgba(129,140,248,.35);background:rgba(129,140,248,.05)}
+.rank-pos{font-size:16px;font-weight:900;color:var(--fg3);font-family:var(--cond);min-width:26px;flex-shrink:0;letter-spacing:.02em;line-height:1}
 .rank-row-top .rank-pos{color:var(--accent)}
 .rank-row-info{flex:1;min-width:0}
-.rank-row-match{font-size:10px;color:var(--fg2);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rank-row-pick{font-size:11px;font-weight:700;color:var(--fg);font-family:var(--mono);display:block}
+.rank-row-match{font-size:11px;color:var(--fg2);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--sans);letter-spacing:.01em}
+.rank-row-pick{font-size:14px;font-weight:800;color:var(--fg);font-family:var(--cond);display:block;letter-spacing:.06em;text-transform:uppercase;line-height:1.15}
 .rank-row-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
-.rank-row-prob{font-size:10px;font-weight:700;color:var(--fg2);font-family:var(--mono)}
-.rank-row-ick{font-size:9px;font-weight:700;font-family:var(--mono)}
+.rank-row-prob{font-size:12px;font-weight:700;color:var(--fg2);font-family:var(--mono)}
+.rank-row-ick{font-size:10px;font-weight:700;font-family:var(--mono);letter-spacing:.04em}
 
 /* ── Parlay del Día banner ── */
 .parlay-banner{background:linear-gradient(135deg,rgba(129,140,248,.1) 0%,rgba(59,130,246,.06) 100%);border:1.5px solid rgba(129,140,248,.3);border-radius:14px;overflow:hidden;margin-top:16px}
@@ -555,23 +761,40 @@ function checkAccess(){
 
 <div class="header">
   <div class="logo">
-    <div class="logo-k">K</div>
-    <div>
-      <div class="logo-name">ÍNDIGO v2.5</div>
-      <div class="logo-sub">Predictor · Tiempo Real</div>
+    <div class="logo-k">
+      <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="13,2 24,8.5 24,17.5 13,24 2,17.5 2,8.5" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.5" stroke-linejoin="round"/>
+        <polygon points="13,6 20,10 20,16 13,20 6,16 6,10" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.5)" stroke-width="1" stroke-linejoin="round"/>
+        <circle cx="13" cy="13" r="2.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="logo-wordmark">
+      <div class="logo-name">ÍNDIGO<span class="logo-version">v2.5</span></div>
+      <div class="logo-sub">Predictor de Fútbol · Tiempo Real</div>
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
-    <button class="trk-btn" onclick="toggleTracker()">📋 <span id="trkBtnLbl">Tracker</span></button>
-    <button class="trk-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Cambiar tema" style="font-size:13px;padding:5px 12px">🌙</button>
-    <div class="live-badge">● EN VIVO · ESPN</div>
+    <button class="trk-btn" onclick="toggleTracker()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span id="trkBtnLbl">Tracker</span>
+    </button>
+    <button class="trk-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Cambiar tema" style="padding:5px 12px">
+      <svg id="themeIcon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="live-badge"><span class="live-badge-dot"></span>EN VIVO · ESPN</div>
   </div>
 </div>
+<div class="header-rule"></div>
 
 <!-- TABS -->
-<div class="tabs">
-  <button class="tab active" id="tabAnalisis" onclick="switchTab('analisis')">⚽ Análisis</button>
-  <button class="tab" id="tabJornada" onclick="switchTab('jornada')">📅 Jornada</button>
+<div class="tabs" id="tabsBar">
+  <div class="tabs-slider" id="tabsSlider"></div>
+  <button class="tab active" id="tabAnalisis" onclick="switchTab('analisis')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;margin-top:-2px"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>Análisis
+  </button>
+  <button class="tab" id="tabJornada" onclick="switchTab('jornada')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;margin-top:-2px"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Jornada
+  </button>
 </div>
 
 <!-- JORNADA VIEW -->
@@ -579,7 +802,7 @@ function checkAccess(){
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
     <div>
       <label style="margin-bottom:6px">Liga</label>
-      <div class="sw" style="margin:0;min-width:220px">
+      <div class="sw" style="margin:0;min-width:min(220px,100%)">
         <select id="ligaJornada" onchange="loadJornada()">
           <option value="">— Seleccionar liga —</option>
           <option value="mex.1">🇲🇽 Liga MX</option>
@@ -610,7 +833,7 @@ function checkAccess(){
       </div>
     </div>
   </div>
-  <div id="jornadaContent"><div class="jornada-empty">Selecciona una liga para ver los partidos del día 📅</div></div>
+  <div id="jornadaContent"><div class="jornada-empty"><div class="es"><div class="es-icon">📅</div><div class="es-title">Elige una liga</div><div class="es-sub">Selecciona una liga en el menú para ver los partidos y proyecciones del día</div></div></div></div>
 </div>
 
 <!-- ANALISIS GRID -->
@@ -718,8 +941,11 @@ function checkAccess(){
 
 <div class="card">
   <div id="empty" class="empty">
-    <div class="icon">⚽</div>
-    <p>Selecciona liga y equipos — la forma reciente cargará automáticamente desde ESPN</p>
+    <div class="es">
+      <div class="es-icon">⚽</div>
+      <div class="es-title">Selecciona un partido</div>
+      <div class="es-sub">Elige liga y equipos arriba — el análisis Pythagorean + Poisson cargará automáticamente</div>
+    </div>
   </div>
   <div id="res" style="display:none">
 
@@ -1331,7 +1557,9 @@ function model(code, H, A, neutral, flags, odds) {
   const ick=Math.max(0,Math.min(10,base-p56+pd+pc));
   // Todos los mercados compiten — gana el de mayor probabilidad
   const best=[{n:'Local',p:pW},{n:'Empate',p:pD},{n:'Visitante',p:pL},{n:`Over ${odds.line||2.5}`,p:pO},{n:'BTTS Sí',p:pB}].reduce((a,b)=>a.p>b.p?a:b);
-  return{pW,pD,pL,pO,pB,lH,lA,tot:lH+lA,pF,pU:1-pF,fav,p55,p56,p56t,ick,base,pd,pc,best};
+  // Resultado más probable del grid Poisson — incluir grid completo para filtrar por pick en la card
+  const bestScore=grid.reduce((a,b)=>b.p>a.p?b:a);
+  return{pW,pD,pL,pO,pB,lH,lA,tot:lH+lA,pF,pU:1-pF,fav,p55,p56,p56t,ick,base,pd,pc,best,bestScore,grid};
 }
 
 // ─── RENDER ───────────────────────────────────────────────────
@@ -1340,10 +1568,12 @@ const pctN=n=>(n*100).toFixed(1);
 const d2=n=>n.toFixed(2);
 
 async function calcular() {
+  const _calcBtn = document.getElementById('btnCalc');
+  if(_calcBtn){_calcBtn.classList.add('loading');_calcBtn.disabled=true;}
   const code=document.getElementById('liga').value;
   const H=tdata.H, A=tdata.A;
-  if(!H||!A) return;
-  if(H.id===A.id){alert('Los equipos deben ser distintos.');return}
+  if(!H||!A){if(_calcBtn){_calcBtn.classList.remove('loading');_calcBtn.disabled=false;}return;}
+  if(H.id===A.id){alert('Los equipos deben ser distintos.');if(_calcBtn){_calcBtn.classList.remove('loading');_calcBtn.disabled=false;}return;}
   const neutral=document.getElementById('neutral').checked;
   const flags=Array.from(document.querySelectorAll('.fc-chip.on input')).map(i=>i.value);
   const odds={
@@ -1517,6 +1747,9 @@ async function calcular() {
   }
   // Mostrar botón compartir
   document.getElementById('sharePickBtn').style.display='block';
+  // Restore calcular button
+  const _cb=document.getElementById('btnCalc');
+  if(_cb){_cb.classList.remove('loading');_cb.disabled=!(tdata.H&&tdata.A);}
 }
 
 // ─── TRACKER ─────────────────────────────────────────────────
@@ -1562,7 +1795,8 @@ function savePick(){
   },2000);
 }
 
-function setResult(id,res){
+function setResult(id,res,btn){
+  if(btn){btn.classList.add('pulse');setTimeout(()=>btn.classList.remove('pulse'),400);}
   const picks=getPicks().map(p=>p.id===id?{...p,result:res}:p);
   setPicks(picks);
   renderTracker();
@@ -1593,6 +1827,55 @@ function renderTracker(){
   // Stats bar
   const rateColor = !decided.length ? 'var(--fg3)' : rate>=55 ? 'var(--green)' : rate>=40 ? 'var(--yellow)' : 'var(--red)';
 
+  // ── Racha actual (current streak) ──
+  const decidedByDate = [...picks].filter(p=>p.result!=='pending').sort((a,b)=>(a.ds||a.date||'').localeCompare(b.ds||b.date||''));
+  let streakLen=0, streakType='';
+  for(let i=decidedByDate.length-1;i>=0;i--){
+    const r=decidedByDate[i].result;
+    if(!streakType){streakType=r;streakLen=1;}
+    else if(r===streakType) streakLen++;
+    else break;
+  }
+  const streakLabel = streakLen>=2 ? (streakType==='win'?`🔥 ${streakLen} en racha`:`❄️ ${streakLen} en racha`) : '';
+
+  // ── Sparkline: últimas 25 picks decididas ──
+  const sparkPicks = decidedByDate.slice(-25);
+  const sparkHtml = (() => {
+    if(sparkPicks.length < 3) return '';
+    const W=220, H=36, pad=4;
+    const n=sparkPicks.length;
+    const stepX=(W-pad*2)/(n-1||1);
+    const dots=sparkPicks.map((p,i)=>{
+      const x=pad+i*stepX;
+      const y=p.result==='win'?pad:H-pad;
+      const col=p.result==='win'?'var(--green)':'var(--red)';
+      return {x,y,col,res:p.result};
+    });
+    const linePts=dots.map(d=>`${d.x},${d.y}`).join(' ');
+    const areaD=`M${pad},${H} `+dots.map(d=>`L${d.x},${d.y}`).join(' ')+` L${W-pad},${H} Z`;
+    const circles=dots.map(d=>`<circle cx="${d.x.toFixed(1)}" cy="${d.y}" r="2.8" fill="${d.col}" opacity=".85"/>`).join('');
+    // gradient for area fill
+    const uid='sp'+Math.random().toString(36).slice(2,7);
+    return `<div class="trk-sparkline">
+      <div class="trk-sparkline-title">Historial · últimas ${n} picks</div>
+      <svg width="100%" viewBox="0 0 ${W} ${H}" style="overflow:visible;display:block">
+        <defs>
+          <linearGradient id="${uid}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--green)" stop-opacity=".18"/>
+            <stop offset="100%" stop-color="var(--green)" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="${areaD}" fill="url(#${uid})"/>
+        <polyline points="${linePts}" fill="none" stroke="var(--border2)" stroke-width="1.2"/>
+        ${circles}
+      </svg>
+      <div style="display:flex;justify-content:space-between;margin-top:4px">
+        <span style="font-size:8px;color:var(--fg3);font-family:var(--mono)">← más antiguo</span>
+        <span style="font-size:8px;color:var(--fg3);font-family:var(--mono)">más reciente →</span>
+      </div>
+    </div>`;
+  })();
+
   // Breakdown por mercado
   const markets = ['1X2','Over/Under','BTTS','Hándicap','Otro'];
   const mktStats = markets.map(m => {
@@ -1608,10 +1891,15 @@ function renderTracker(){
       <div style="display:flex;flex-direction:column;gap:6px">
         ${mktStats.map(s=>{
           const rc = s.rate===null ? 'var(--fg3)' : s.rate>=55 ? 'var(--green)' : s.rate>=40 ? 'var(--yellow)' : 'var(--red)';
-          return `<div style="display:flex;align-items:center;gap:10px;font-size:11px">
-            <span style="min-width:80px;color:var(--fg2);font-weight:600">${s.m}</span>
-            <span style="color:var(--fg3);font-family:var(--mono)">${s.wins}/${s.total}</span>
-            <span style="font-family:var(--mono);font-weight:700;color:${rc}">${s.rate!==null?s.rate+'%':'—'}</span>
+          const mktDecided = picks.filter(p=>p.market===s.m&&p.result!=='pending');
+          const mktBarW = mktDecided.length ? Math.round(s.wins/mktDecided.length*100) : 0;
+          return `<div class="trk-bar-row">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="min-width:80px;color:var(--fg2);font-weight:600;font-size:10px;font-family:var(--cond);letter-spacing:.02em">${s.m}</span>
+              <span style="color:var(--fg3);font-family:var(--mono);font-size:10px">${s.wins}/${s.total}</span>
+              <span style="font-family:var(--mono);font-weight:800;font-size:11px;color:${rc};margin-left:auto">${s.rate!==null?s.rate+'%':'—'}</span>
+            </div>
+            ${mktDecided.length ? `<div class="trk-bar-track"><div class="trk-bar-fill" style="width:${mktBarW}%;background:${rc}"></div></div>` : ''}
           </div>`;
         }).join('')}
       </div>
@@ -1646,10 +1934,10 @@ function renderTracker(){
         </div>`;
       }).join('');
       return `<div style="display:flex;flex-direction:column;gap:4px">
-        <div style="display:flex;align-items:center;gap:10px;font-size:11px">
-          <span style="min-width:80px;color:var(--fg2);font-weight:700">${m}</span>
-          <span style="color:var(--fg3);font-family:var(--mono)">${mw}/${mp.length}</span>
-          <span style="font-family:var(--mono);font-weight:700;color:${mrc}">${mrate!==null?mrate+'%':'—'}</span>
+        <div style="display:flex;align-items:center;gap:8px;font-size:11px">
+          <span style="min-width:80px;color:var(--fg2);font-weight:700;font-family:var(--cond);letter-spacing:.02em">${m}</span>
+          <span style="color:var(--fg3);font-family:var(--mono);font-size:10px">${mw}/${mp.length}</span>
+          <span style="font-family:var(--mono);font-weight:800;color:${mrc};margin-left:auto">${mrate!==null?mrate+'%':'—'}</span>
         </div>
         ${subRows}
       </div>`;
@@ -1675,10 +1963,15 @@ function renderTracker(){
       <div style="display:flex;flex-direction:column;gap:6px">
         ${ligaStats.map(s=>{
           const rc = s.rate===null ? 'var(--fg3)' : s.rate>=55 ? 'var(--green)' : s.rate>=40 ? 'var(--yellow)' : 'var(--red)';
-          return `<div style="display:flex;align-items:center;gap:10px;font-size:11px">
-            <span style="min-width:90px;color:var(--fg2);font-weight:600;font-size:10px">${s.lg}</span>
-            <span style="color:var(--fg3);font-family:var(--mono)">${s.wins}/${s.total}</span>
-            <span style="font-family:var(--mono);font-weight:700;color:${rc}">${s.rate!==null?s.rate+'%':'—'}</span>
+          const lgDecided = picks.filter(p=>{const n=p=>((p.league||'').replace(/\s*\d{4}-\d{2,4}$/,'').trim());return n(p)===s.lg&&p.result!=='pending';});
+          const lgBarW = lgDecided.length ? Math.round(s.wins/lgDecided.length*100) : 0;
+          return `<div class="trk-bar-row">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="min-width:90px;color:var(--fg2);font-weight:600;font-size:10px;font-family:var(--cond);letter-spacing:.02em">${s.lg}</span>
+              <span style="color:var(--fg3);font-family:var(--mono);font-size:10px">${s.wins}/${s.total}</span>
+              <span style="font-family:var(--mono);font-weight:800;font-size:11px;color:${rc};margin-left:auto">${s.rate!==null?s.rate+'%':'—'}</span>
+            </div>
+            ${lgDecided.length ? `<div class="trk-bar-track"><div class="trk-bar-fill" style="width:${lgBarW}%;background:${rc}"></div></div>` : ''}
           </div>`;
         }).join('')}
       </div>
@@ -1703,13 +1996,13 @@ function renderTracker(){
       const rrate = rd.length ? Math.round(rw/rd.length*100) : null;
       const rc = rrate===null?'var(--fg3)':rrate>=60?'var(--green)':rrate>=45?'var(--yellow)':'var(--red)';
       const barW = rd.length ? Math.round(rw/rd.length*100) : 0;
-      return `<div style="display:flex;flex-direction:column;gap:3px;font-size:11px">
+      return `<div class="trk-bar-row">
         <div style="display:flex;align-items:center;gap:8px">
-          <span style="min-width:100px;color:var(--fg2);font-weight:600;font-size:10px">${rng.lbl}</span>
-          <span style="color:var(--fg3);font-family:var(--mono)">${rw}/${rp.length}</span>
-          <span style="font-family:var(--mono);font-weight:700;color:${rc}">${rrate!==null?rrate+'%':'—'}</span>
+          <span style="min-width:104px;color:var(--fg2);font-weight:600;font-size:10px;font-family:var(--cond);letter-spacing:.02em">${rng.lbl}</span>
+          <span style="color:var(--fg3);font-family:var(--mono);font-size:10px">${rw}/${rp.length}</span>
+          <span style="font-family:var(--mono);font-weight:800;font-size:11px;color:${rc};margin-left:auto">${rrate!==null?rrate+'%':'—'}</span>
         </div>
-        ${rd.length ? `<div style="height:3px;border-radius:2px;background:var(--bg4);overflow:hidden"><div style="width:${barW}%;height:100%;background:${rc};border-radius:2px;transition:width .4s"></div></div>` : ''}
+        ${rd.length ? `<div class="trk-bar-track"><div class="trk-bar-fill" style="width:${barW}%;background:${rc}"></div></div>` : ''}
       </div>`;
     }).filter(Boolean);
     return rows.length ? `
@@ -1720,11 +2013,24 @@ function renderTracker(){
   })();
 
   document.getElementById('trkStats').innerHTML=`
-    <div class="ts"><div class="ts-v">${total}</div><div class="ts-l">Total picks</div></div>
-    <div class="ts"><div class="ts-v" style="color:var(--green)">${wins}</div><div class="ts-l">Aciertos ✓</div></div>
-    <div class="ts"><div class="ts-v" style="color:var(--red)">${losses}</div><div class="ts-l">Fallos ✗</div></div>
-    <div class="ts"><div class="ts-v" style="color:${rateColor}">${decided.length ? rate+'%' : '—'}</div><div class="ts-l">% Acierto</div></div>
-  ` + ickHtml + mktHtml + mktIckHtml + ligaHtml;
+    <div class="ts">
+      <div class="ts-v">${total}</div>
+      <div class="ts-l">Total picks</div>
+    </div>
+    <div class="ts">
+      <div class="ts-v" style="color:var(--green)">${wins}</div>
+      <div class="ts-l">Aciertos ✓</div>
+    </div>
+    <div class="ts">
+      <div class="ts-v" style="color:var(--red)">${losses}</div>
+      <div class="ts-l">Fallos ✗</div>
+    </div>
+    <div class="ts">
+      <div class="ts-v" style="color:${rateColor}">${decided.length ? rate+'%' : '—'}</div>
+      <div class="ts-l">% Acierto</div>
+      ${streakLabel ? `<div class="ts-streak">${streakLabel}</div>` : ''}
+    </div>
+  ` + sparkHtml + ickHtml + mktHtml + mktIckHtml + ligaHtml;
 
   // Populate liga filter dropdown
   const normLigaFilter = s => (s||'').replace(/\s*\d{4}-\d{2,4}$/,'').trim();
@@ -1747,7 +2053,7 @@ function renderTracker(){
   // Lista de picks
   const list=document.getElementById('pkList');
   if(!picks.length){
-    list.innerHTML='<div class="trk-empty">Aún no hay picks guardados.<br>Analiza un partido para que se guarden automáticamente.</div>';
+    list.innerHTML='<div class="trk-empty"><div class="es"><div class="es-icon">📋</div><div class="es-title">Sin picks aún</div><div class="es-sub">Analiza un partido y los picks se guardarán automáticamente aquí</div></div></div>';
     return;
   }
   list.innerHTML=visiblePicks.map(p=>{
@@ -1766,9 +2072,9 @@ function renderTracker(){
       <div class="pk-pick">${p.pick}</div>
       <div class="pk-prob">${p.prob}%</div>
       <div class="pk-res">
-        <button class="r-w ${rW}" onclick="setResult(${p.id},'win')" title="Marcar como acierto">✓</button>
-        <button class="r-l ${rL}" onclick="setResult(${p.id},'loss')" title="Marcar como fallo">✗</button>
-        <button class="r-p ${rP}" onclick="setResult(${p.id},'pending')" title="Pendiente">⏳</button>
+        <button class="r-w ${rW}" onclick="setResult(${p.id},'win',this)" title="Marcar como acierto">✓</button>
+        <button class="r-l ${rL}" onclick="setResult(${p.id},'loss',this)" title="Marcar como fallo">✗</button>
+        <button class="r-p ${rP}" onclick="setResult(${p.id},'pending',this)" title="Pendiente">⏳</button>
       </div>
       <button class="pk-del" onclick="deletePick(${p.id})" title="Eliminar">✕</button>
     </div>`;
@@ -1896,18 +2202,53 @@ function toggleTracker(){
 // Init tracker badge on load
 renderTracker();
 
+// Init tab slider
+setTimeout(() => moveTabSlider('tabAnalisis'), 60);
+
 // ─── TABS ─────────────────────────────────────────────────────
 function switchTab(tab) {
   const isJornada = tab === 'jornada';
   document.getElementById('tabAnalisis').classList.toggle('active', !isJornada);
   document.getElementById('tabJornada').classList.toggle('active', isJornada);
-  document.getElementById('analisisGrid').style.display = isJornada ? 'none' : '';
-  document.getElementById('jornadaWrap').classList.toggle('open', isJornada);
-  if (isJornada && !_jornadaLoaded) {
-    // sync league if one is already selected
-    const lv = document.getElementById('liga').value;
-    if (lv) { document.getElementById('ligaJornada').value = lv; loadJornada(); }
+
+  const analisis = document.getElementById('analisisGrid');
+  const jornada  = document.getElementById('jornadaWrap');
+
+  // Funcionalidad primero — inmediata, sin depender de animaciones
+  if (isJornada) {
+    analisis.style.display = 'none';
+    jornada.classList.add('open');
+    jornada.style.display = 'block';
+    if (!_jornadaLoaded) {
+      const lv = document.getElementById('liga').value;
+      if (lv) { document.getElementById('ligaJornada').value = lv; loadJornada(); }
+    }
+  } else {
+    jornada.classList.remove('open');
+    jornada.style.display = 'none';
+    analisis.style.display = '';
   }
+
+  // Animación de entrada sobre el panel visible (solo cosmética)
+  const inEl = isJornada ? jornada : analisis;
+  inEl.classList.remove('section-entering');
+  void inEl.offsetWidth;
+  inEl.classList.add('section-entering');
+  inEl.addEventListener('animationend', () => inEl.classList.remove('section-entering'), {once:true});
+
+  // Mover slider de tabs
+  moveTabSlider(isJornada ? 'tabJornada' : 'tabAnalisis');
+}
+
+function moveTabSlider(activeId) {
+  const slider = document.getElementById('tabsSlider');
+  const bar    = document.getElementById('tabsBar');
+  const btn    = document.getElementById(activeId);
+  if (!slider || !bar || !btn) return;
+  const barRect = bar.getBoundingClientRect();
+  const btnRect = btn.getBoundingClientRect();
+  slider.style.left  = (btnRect.left - barRect.left) + 'px';
+  slider.style.width = btnRect.width + 'px';
 }
 
 // ─── JORNADA ──────────────────────────────────────────────────
@@ -2007,9 +2348,23 @@ async function loadJornada() {
   // Helper: filter day sections by date string (null = show all)
   function filterDaySections(activeDsFilter) {
     document.querySelectorAll('.day-section').forEach(sec => {
-      if (!activeDsFilter) { sec.style.display = ''; return; }
       const secDs = sec.id.replace('daySection_', '');
-      sec.style.display = (secDs === activeDsFilter) ? '' : 'none';
+      const show = !activeDsFilter || secDs === activeDsFilter;
+      if (show) {
+        sec.style.display = '';
+        sec.classList.remove('section-leaving');
+        sec.classList.remove('section-entering');
+        void sec.offsetWidth;
+        sec.classList.add('section-entering');
+        sec.addEventListener('animationend', () => sec.classList.remove('section-entering'), {once:true});
+      } else {
+        if (sec.style.display === 'none') return;
+        sec.classList.add('section-leaving');
+        sec.addEventListener('animationend', () => {
+          sec.classList.remove('section-leaving');
+          sec.style.display = 'none';
+        }, {once:true});
+      }
     });
     // Update ranking to reflect the visible date
     _activeRankingDS = activeDsFilter || '';
@@ -2049,7 +2404,7 @@ async function loadJornada() {
   // El filtro de Hoy se aplica DESPUÉS de que se creen las secciones (ver fin de loadJornada)
 
   const content = document.getElementById('jornadaContent');
-  content.innerHTML = `<div class="jornada-empty"><span class="spin">⟳</span> Cargando proyección 7 días…</div>`;
+  content.innerHTML = `<div class="jornada-empty"><div class="es"><div class="es-icon" style="opacity:.5">⟳</div><div class="es-title">Cargando</div><div class="es-sub">Obteniendo proyección 7 días…</div></div></div>`;
 
   // Fetch ONLY today on initial load; other dates loaded on demand
   const days = Array.from({length:7}, (_,i) => getDateStr(i));
@@ -2058,14 +2413,14 @@ async function loadJornada() {
     const todaySb = await espnFetch(`${ESPN}/${code}/scoreboard?dates=${_todayDS}&limit=50`);
     dayResults = [{ ds: _todayDS, events: todaySb.events || [] }];
   } catch(e) {
-    content.innerHTML = `<div class="jornada-empty">⚠️ No se pudo cargar la proyección: ${e.message}</div>`;
+    content.innerHTML = `<div class="jornada-empty"><div class="es"><div class="es-icon">⚠️</div><div class="es-title">Error al cargar</div><div class="es-sub">${e.message}</div></div></div>`;
     return;
   }
 
   const totalEvents = dayResults.reduce((s,d)=>s+d.events.length,0);
   if (!totalEvents) {
     // No hay partidos hoy — buscar el día más próximo con partidos reales
-    content.innerHTML = `<div class="jornada-empty"><span class="spin">⟳</span> Buscando próximos partidos…</div>`;
+    content.innerHTML = `<div class="jornada-empty"><div class="es"><div class="es-icon" style="opacity:.5">⟳</div><div class="es-title">Buscando partidos</div><div class="es-sub">Consultando el calendario de la liga…</div></div></div>`;
     let foundDs = null;
     let foundEvents = null;
     for (let i = 1; i <= 6; i++) {
@@ -2080,7 +2435,7 @@ async function loadJornada() {
       } catch(e) { /* seguir buscando */ }
     }
     if (!foundDs) {
-      content.innerHTML = `<div class="jornada-empty">📅 No hay partidos programados esta semana en esta liga.</div>`;
+      content.innerHTML = `<div class="jornada-empty"><div class="es"><div class="es-icon">📅</div><div class="es-title">Sin partidos esta semana</div><div class="es-sub">No hay partidos programados en esta liga para los próximos 7 días</div></div></div>`;
       return;
     }
     // Activar el chip del día encontrado
@@ -2145,7 +2500,7 @@ async function loadJornada() {
       <div class="match-card loading" id="mcard_${startIdx+i}">
         <div class="mc-header">
           <span class="mc-time">${m.statusLbl}</span>
-          <span class="mc-ick-badge" style="color:var(--fg3);border-color:rgba(100,120,160,.2)">ICK —</span>
+          <span class="mc-ick-badge"></span>
         </div>
         <div class="mc-body">
           <div class="mc-teams">
@@ -2217,7 +2572,7 @@ async function loadDateOnDemand(ds) {
       const empty = document.createElement('div');
       empty.id = 'daySection_'+ds;
       empty.className = 'day-section';
-      empty.innerHTML = `<div class="day-hdr"><span class="day-hdr-lbl">${fmtDateLabel(ds,true)}</span></div><div style="text-align:center;padding:20px;color:var(--fg3);font-size:12px">Sin partidos programados.</div>`;
+      empty.innerHTML = `<div class="day-hdr"><span class="day-hdr-lbl">${fmtDateLabel(ds,true)}</span></div><div class="jornada-empty" style="margin-top:8px"><div class="es" style="padding:28px 16px"><div class="es-icon">📅</div><div class="es-sub">Sin partidos programados este día</div></div></div>`;
       content.appendChild(empty);
       filterDaySectionsByDs(ds);
       return;
@@ -2284,16 +2639,16 @@ const LEAGUE_THEMES = {
   'usa.1':         {la:'239,68,68',  la2:'220,38,38',  lag:'rgba(239,68,68,.2)'},   // rojo
   'esp.1':         {la:'250,204,21', la2:'234,179,8',  lag:'rgba(250,204,21,.2)'},  // amarillo
   'eng.1':         {la:'139,92,246', la2:'124,58,237', lag:'rgba(139,92,246,.2)'},  // morado
-  'ger.1':         {la:'249,115,22', la2:'234,88,12',  lag:'rgba(249,115,22,.2)'},  // naranja
+  'ger.1':         {la:'251,146,60', la2:'234,88,12',  lag:'rgba(251,146,60,.2)'},  // naranja
   'ita.1':         {la:'96,165,250', la2:'59,130,246', lag:'rgba(96,165,250,.2)'},  // azul
   'fra.1':         {la:'244,63,94',  la2:'225,29,72',  lag:'rgba(244,63,94,.2)'},   // rosa
-  'por.1':         {la:'249,115,22', la2:'234,88,12',  lag:'rgba(249,115,22,.2)'},
+  'por.1':         {la:'251,146,60', la2:'234,88,12',  lag:'rgba(251,146,60,.2)'},
   'ned.1':         {la:'251,146,60', la2:'234,88,12',  lag:'rgba(251,146,60,.2)'},
   'uefa.champions':{la:'250,204,21', la2:'234,179,8',  lag:'rgba(250,204,21,.2)'},  // dorado UCL
   'uefa.europa':   {la:'96,165,250', la2:'59,130,246', lag:'rgba(96,165,250,.2)'},
 };
 function setLeagueTheme(code) {
-  const t = LEAGUE_THEMES[code] || {la:'249,115,22',la2:'234,88,12',lag:'rgba(249,115,22,.2)'};
+  const t = LEAGUE_THEMES[code] || {la:'129,140,248',la2:'99,102,241',lag:'rgba(129,140,248,.2)'};
   const r = document.documentElement;
   r.style.setProperty('--la', t.la);
   r.style.setProperty('--la2', t.la2);
@@ -2316,15 +2671,35 @@ function setCardView(mode) {
 // ── ICK counter animation ──
 function animateICK(el, targetVal, color) {
   if (!el) return;
+  const R = 22, CX = 32, CY = 32, SW = 3.8;
+  const C = 2 * Math.PI * R;
+  const trackLen = C * 0.75; // 270° arc
+  const uid = Math.random().toString(36).slice(2);
+  el.innerHTML = `<svg width="64" height="64" viewBox="0 0 64 64" style="display:block;overflow:visible">
+    <circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="rgba(100,120,160,.18)" stroke-width="${SW}"
+      stroke-dasharray="${trackLen} ${C}" stroke-dashoffset="${-(C * 0.125)}" stroke-linecap="round"
+      transform="rotate(-225 ${CX} ${CY})"/>
+    <circle id="ick-arc-${uid}" cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${color}" stroke-width="${SW}"
+      stroke-dasharray="0 ${C}" stroke-dashoffset="${-(C * 0.125)}" stroke-linecap="round"
+      transform="rotate(-225 ${CX} ${CY})" style="transition:none"/>
+    <text id="ick-num-${uid}" x="${CX}" y="${CY - 2}" text-anchor="middle" dominant-baseline="middle"
+      fill="${color}" font-family="'Barlow Condensed',sans-serif" font-weight="800" font-size="17">0.0</text>
+    <text x="${CX}" y="${CY + 12}" text-anchor="middle" dominant-baseline="middle"
+      fill="rgba(120,140,180,.65)" font-family="'JetBrains Mono',monospace" font-size="7.5" letter-spacing="1.4">ICK</text>
+  </svg>`;
+  const arc = el.querySelector(`#ick-arc-${uid}`);
+  const num = el.querySelector(`#ick-num-${uid}`);
   const start = performance.now();
-  const dur = 600;
+  const dur = 700;
   function tick(now) {
     const t = Math.min((now - start) / dur, 1);
     const ease = 1 - Math.pow(1 - t, 3);
-    el.textContent = `ICK ${(targetVal * ease).toFixed(1)}`;
-    el.style.color = color;
+    const val = targetVal * ease;
+    const fill = (val / 10) * trackLen;
+    arc.setAttribute('stroke-dasharray', `${fill} ${C}`);
+    num.textContent = val.toFixed(1);
     if (t < 1) requestAnimationFrame(tick);
-    else el.textContent = `ICK ${targetVal.toFixed(1)}`;
+    else { arc.setAttribute('stroke-dasharray', `${(targetVal/10)*trackLen} ${C}`); num.textContent = targetVal.toFixed(1); }
   }
   requestAnimationFrame(tick);
 }
@@ -2463,7 +2838,7 @@ async function enrichMatchCard(idx, m, code, ds, espnOdds) {
     // Collect picks for dynamic ranking (all dates)
     const _dec = /Over|Under/.test(rec.primary) ? americanToDec(espnOdds?.ouOver) : null;
     _picksByDate[ds] = _picksByDate[ds] || [];
-    _picksByDate[ds].push({ homeName: m.homeName, awayName: m.awayName, pick: rec.primary, prob: rec.primaryProb, ick: r.ick, dec: _dec });
+    _picksByDate[ds].push({ homeName: m.homeName, awayName: m.awayName, pick: rec.primary, prob: rec.primaryProb, ick: r.ick, dec: _dec, league: code });
     _pickDoneByDate[ds] = (_pickDoneByDate[ds] || 0) + 1;
     if (ds === _todayDS) {
       _jornadaPicks = _picksByDate[ds];
@@ -2485,6 +2860,9 @@ async function enrichMatchCard(idx, m, code, ds, espnOdds) {
       switchTab('analisis');
     };
     const ickColor = r.ick >= 7.5 ? 'var(--green)' : r.ick >= 6.0 ? 'var(--yellow)' : 'var(--fg3)';
+    const ickColorRaw = r.ick >= 7.5 ? '#34d399' : r.ick >= 6.0 ? '#fbbf24' : '#5a7090';
+    // Set card top accent border based on ICK level
+    el.style.borderTop = `3px solid ${ickColorRaw}`;
     const mixedWarn = (fH.count<5||fA.count<5) ? `<span style="color:var(--yellow);font-size:8px;font-family:var(--mono)" title="Datos insuficientes en UEFA; se usó forma de liga local">⚠ mixta</span>` : '';
     const isOU = /Over|Under/.test(rec.primary);
     const dec = isOU ? americanToDec(espnOdds?.ouOver) : null;
@@ -2492,10 +2870,25 @@ async function enrichMatchCard(idx, m, code, ds, espnOdds) {
       ? `${evBadge(rec.primaryProb, dec)}<span class="ev-line">${espnOdds?.ouLine ?? '2.5'} · ${dec.toFixed(2)}</span>`
       : fairLine(rec.primaryProb);
     const valorHtml = r.ick >= 7.5 ? '<span class="valor-badge">⚡ VALOR</span>' : '';
+    // Filtrar grid según tipo de pick para mostrar resultado probable compatible
+    const pickTxt = rec.primary || '';
+    let pickGrid = r.grid;
+    const ouMatch = pickTxt.match(/(\d+\.?\d*)/);
+    const ouLine = ouMatch ? parseFloat(ouMatch[1]) : 2.5;
+    if (/over/i.test(pickTxt))      pickGrid = r.grid.filter(s => s.h + s.a > ouLine);
+    else if (/under/i.test(pickTxt)) pickGrid = r.grid.filter(s => s.h + s.a < ouLine);
+    else if (/local/i.test(pickTxt)) pickGrid = r.grid.filter(s => s.h > s.a);
+    else if (/empate/i.test(pickTxt)) pickGrid = r.grid.filter(s => s.h === s.a);
+    else if (/visitante/i.test(pickTxt)) pickGrid = r.grid.filter(s => s.h < s.a);
+    else if (/btts/i.test(pickTxt)) pickGrid = r.grid.filter(s => s.h > 0 && s.a > 0);
+    const bs = (pickGrid.length > 0 ? pickGrid : r.grid).reduce((a,b) => b.p > a.p ? b : a);
+    const bsPct = (bs.p * 100).toFixed(1);
+    const bsResult = bs.h > bs.a ? 'Local' : bs.h < bs.a ? 'Visitante' : 'Empate';
+    const bsColor = bs.h > bs.a ? 'var(--green)' : bs.h < bs.a ? 'var(--red)' : 'var(--yellow)';
     el.innerHTML = `
       <div class="mc-header">
         <span class="mc-time">${m.statusLbl}</span>
-        <span class="mc-ick-badge" style="color:${ickColor};border-color:${ickColor}30">ICK ${r.ick.toFixed(1)}</span>
+        <span class="mc-ick-badge"></span>
       </div>
       <div class="mc-body">
         <div class="mc-teams">
@@ -2504,14 +2897,21 @@ async function enrichMatchCard(idx, m, code, ds, espnOdds) {
           <div class="mc-team away" style="display:flex;align-items:center;gap:5px;justify-content:flex-end">${tA} ${m.awayName}</div>
         </div>
         <div class="mc-pick-hero">
-          <div>
+          <div class="mc-pick-top">
             <div class="mc-pick-label">${rec.primary}</div>
-            <div style="font-size:9px;color:var(--fg3);font-family:var(--mono);margin-top:3px">λ ${r.lH.toFixed(2)}·${r.lA.toFixed(2)} ${mixedWarn}</div>
+            <div class="mc-pick-right">
+              <span class="mc-pick-prob">${(rec.primaryProb*100).toFixed(0)}%</span>
+              <span class="mc-pick-prob-lbl">probabilidad</span>
+            </div>
           </div>
-          <div class="mc-pick-right">
-            <span class="mc-pick-prob">${(rec.primaryProb*100).toFixed(0)}%</span>
-            <span class="mc-pick-prob-lbl">probabilidad</span>
-          </div>
+          <div class="mc-pick-divider"></div>
+          <div class="mc-pick-lambda">λ&nbsp;${r.lH.toFixed(2)}·${r.lA.toFixed(2)} ${mixedWarn}</div>
+        </div>
+        <div class="mc-score-row">
+          <span class="mc-score-lbl">Resultado probable</span>
+          <span class="mc-score-val" style="color:${bsColor}">${bs.h}–${bs.a}</span>
+          <span class="mc-score-res">${bsResult}</span>
+          <span class="mc-score-pct">${bsPct}%</span>
         </div>
         <div class="mc-footer">
           <div class="mc-markets">${rec.tags.map(t=>`<span class="mc-mkt ${t.cls}">${t.label}</span>`).join('')} ${valorHtml}</div>
@@ -2541,14 +2941,31 @@ async function enrichMatchCard(idx, m, code, ds, espnOdds) {
 function renderRankingSection() {
   const rankEl = document.getElementById('rankingSection');
   if (!rankEl) return;
+  // Fade-in suave al actualizar el ranking
+  rankEl.style.opacity = '0';
+  rankEl.style.transition = 'opacity .22s ease';
 
   // Use active date's picks; if "Todos" show all dates flattened
   const srcPicks = _activeRankingDS
     ? (_picksByDate[_activeRankingDS] || [])
     : Object.values(_picksByDate).flat();
-  const picks = srcPicks.slice().sort((a,b) => b.ick - a.ick);
+  const allPicks = srcPicks.slice().sort((a,b) => b.ick - a.ick);
+  // PASO 5.7: Excluir BTTS con ICK < 7.0 del ranking
+  // PASO 5.8: Excluir Europa League con ICK < 7.0 del ranking
+  // PASO 5.9: Excluir 1X2 con ICK < 6.0 del ranking
+  const picks = allPicks.filter(p => {
+    const isBTTS = /BTTS/i.test(p.pick);
+    const isOU   = /Over|Under/i.test(p.pick);
+    const is1X2  = !isBTTS && !isOU;
+    const isUEL  = (p.league || '') === 'uefa.europa';
+    if (isBTTS && p.ick < 7.0) return false;
+    if (isUEL  && p.ick < 7.0) return false;
+    if (is1X2  && p.ick < 6.0) return false;
+    return true;
+  });
   if (!picks.length) {
     rankEl.innerHTML = '';
+    requestAnimationFrame(() => { rankEl.style.opacity='1'; setTimeout(()=>{rankEl.style.transition='';rankEl.style.opacity='';},200); });
     return;
   }
 
@@ -2556,7 +2973,8 @@ function renderRankingSection() {
   const top = picks[0];
   if (top.ick < 6.0) {
     const dayLbl = _activeRankingDS ? fmtDateLabel(_activeRankingDS, false) : 'en rango';
-    rankEl.innerHTML = `<div class="rank-no-pick">📭 Sin picks de confianza ${dayLbl} — mejor ICK: ${top.ick.toFixed(1)}</div>`;
+    rankEl.innerHTML = `<div class="rank-no-pick"><div class="es" style="padding:28px 24px"><div class="es-icon">📭</div><div class="es-title">Sin picks de confianza</div><div class="es-sub">${dayLbl} · Mejor ICK disponible: ${top.ick.toFixed(1)}</div></div></div>`;
+    requestAnimationFrame(() => { rankEl.style.opacity='1'; setTimeout(()=>{rankEl.style.transition='';rankEl.style.opacity='';},200); });
     return;
   }
   const ickColor = top.ick >= 7.5 ? 'var(--green)' : top.ick >= 6.0 ? 'var(--yellow)' : 'var(--fg3)';
@@ -2566,10 +2984,16 @@ function renderRankingSection() {
   <div class="rank-hero">
     <div class="rank-hero-badge">⭐ PICK ${_activeRankingDS ? fmtDateLabel(_activeRankingDS,false).toUpperCase() : 'GLOBAL'}</div>
     <div class="rank-hero-match">${top.homeName} <span class="rank-hero-vs">vs</span> ${top.awayName}</div>
+    <div class="rank-hero-divider"></div>
     <div class="rank-hero-pick">${top.pick}</div>
     <div class="rank-hero-stats">
-      <span class="rank-hero-prob">${(top.prob*100).toFixed(0)}%</span>
-      <span class="rank-hero-ick" style="color:${ickColor}">ICK ${top.ick.toFixed(1)}</span>
+      <div class="rank-hero-stat-pill">
+        <span class="rank-hero-prob">${(top.prob*100).toFixed(0)}%</span>
+        <span style="color:var(--fg3);font-size:10px">prob</span>
+      </div>
+      <div class="rank-hero-stat-pill">
+        <span class="rank-hero-ick" style="color:${ickColor}">ICK ${top.ick.toFixed(1)}</span>
+      </div>
     </div>
     <div class="rank-hero-ev">${top.dec ? evBadge(top.prob, top.dec) : fairLine(top.prob)}</div>
   </div>
@@ -2634,6 +3058,11 @@ function renderRankingSection() {
     <div class="rank-list">${listHtml}</div>
     ${parlayHtml}
   `;
+  // Fade in
+  requestAnimationFrame(() => {
+    rankEl.style.opacity = '1';
+    setTimeout(() => { rankEl.style.transition = ''; rankEl.style.opacity = ''; }, 300);
+  });
 }
 
 // Cache teamId → domestic league code (persiste durante la sesión)
@@ -2973,11 +3402,14 @@ function renderLines(containerId, lines) {
 }
 
 async function initStatsModule() {
+  const _smBtn=document.querySelector('[onclick="initStatsModule()"]');
+  if(_smBtn){_smBtn.classList.add('loading');}
   const code = document.getElementById('liga').value;
   const H = tdata.H, A = tdata.A;
   if (!code || !H || !A) {
     document.getElementById('modCornersErr').textContent = 'Selecciona liga y equipos primero.';
     document.getElementById('modCornersErr').style.display = 'block';
+    if(_smBtn){_smBtn.classList.remove('loading');}
     return;
   }
 
@@ -3176,11 +3608,14 @@ function renderGolList(containerId, players, teamLambda, n) {
 }
 
 async function initGoleadorModule() {
+  const _gmBtn=document.querySelector('[onclick="initGoleadorModule()"]');
+  if(_gmBtn){_gmBtn.classList.add('loading');}
   const code = document.getElementById('liga').value;
   const H = tdata.H, A = tdata.A;
   if (!code || !H || !A) {
     document.getElementById('modGoleadorErr').textContent = 'Selecciona liga y equipos primero.';
     document.getElementById('modGoleadorErr').style.display = 'block';
+    if(_gmBtn){_gmBtn.classList.remove('loading');}
     return;
   }
   const loadEl = document.getElementById('modGoleadorLoad');
