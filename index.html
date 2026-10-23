@@ -1617,6 +1617,49 @@ function renderTracker(){
       </div>
     </div>` : '';
 
+  // Breakdown cruzado: mercado × rango ICK
+  const ickRangesDefs = [
+    {lbl:'7.0–7.9', min:7.0, max:7.99},
+    {lbl:'6.0–6.9', min:6.0, max:6.99},
+    {lbl:'<6.0',    min:0,   max:5.99},
+  ];
+  const mktIckHtml = (() => {
+    const activeMkts = markets.filter(m => picks.some(p=>p.market===m));
+    if (!activeMkts.length) return '';
+    const rows = activeMkts.map(m => {
+      const mp = picks.filter(p=>p.market===m);
+      const md = mp.filter(p=>p.result!=='pending');
+      const mw = mp.filter(p=>p.result==='win').length;
+      const mrate = md.length ? Math.round(mw/md.length*100) : null;
+      const mrc = mrate===null?'var(--fg3)':mrate>=55?'var(--green)':mrate>=40?'var(--yellow)':'var(--red)';
+      const subRows = ickRangesDefs.map(rng => {
+        const rp = mp.filter(p=>{ const v=parseFloat(p.ick); return !isNaN(v)&&v>=rng.min&&v<=rng.max; });
+        if (!rp.length) return '';
+        const rd = rp.filter(p=>p.result!=='pending');
+        const rw = rp.filter(p=>p.result==='win').length;
+        const rrate = rd.length ? Math.round(rw/rd.length*100) : null;
+        const rrc = rrate===null?'var(--fg3)':rrate>=55?'var(--green)':rrate>=40?'var(--yellow)':'var(--red)';
+        return `<div style="display:flex;align-items:center;gap:8px;font-size:10px;padding-left:12px;border-left:2px solid var(--border2)">
+          <span style="min-width:48px;color:var(--fg3)">ICK ${rng.lbl}</span>
+          <span style="color:var(--fg3);font-family:var(--mono)">${rw}/${rp.length}</span>
+          <span style="font-family:var(--mono);font-weight:700;color:${rrc}">${rrate!==null?rrate+'%':'—'}</span>
+        </div>`;
+      }).join('');
+      return `<div style="display:flex;flex-direction:column;gap:4px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:11px">
+          <span style="min-width:80px;color:var(--fg2);font-weight:700">${m}</span>
+          <span style="color:var(--fg3);font-family:var(--mono)">${mw}/${mp.length}</span>
+          <span style="font-family:var(--mono);font-weight:700;color:${mrc}">${mrate!==null?mrate+'%':'—'}</span>
+        </div>
+        ${subRows}
+      </div>`;
+    });
+    return `<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--fg3);margin-bottom:10px">Mercado × ICK</div>
+      <div style="display:flex;flex-direction:column;gap:10px">${rows.join('')}</div>
+    </div>`;
+  })();
+
   // Breakdown por liga — normalizar nombres (quitar año para unificar duplicados)
   const normLiga = s => (s||'').replace(/\s*\d{4}-\d{2,4}$/,'').trim();
   const ligasAll = [...new Set(picks.map(p=>normLiga(p.league)).filter(Boolean))];
@@ -1681,7 +1724,7 @@ function renderTracker(){
     <div class="ts"><div class="ts-v" style="color:var(--green)">${wins}</div><div class="ts-l">Aciertos ✓</div></div>
     <div class="ts"><div class="ts-v" style="color:var(--red)">${losses}</div><div class="ts-l">Fallos ✗</div></div>
     <div class="ts"><div class="ts-v" style="color:${rateColor}">${decided.length ? rate+'%' : '—'}</div><div class="ts-l">% Acierto</div></div>
-  ` + ickHtml + mktHtml + ligaHtml;
+  ` + ickHtml + mktHtml + mktIckHtml + ligaHtml;
 
   // Populate liga filter dropdown
   const normLigaFilter = s => (s||'').replace(/\s*\d{4}-\d{2,4}$/,'').trim();
